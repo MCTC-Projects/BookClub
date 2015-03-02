@@ -22,6 +22,11 @@ public class GoodReadsBook {
     URL imageUrl;
     Integer numPages, numReviews, numRatings;
     Double AveRating;
+    String description;
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     GoodReadsBook(Book b) {this.bk = b;}
 

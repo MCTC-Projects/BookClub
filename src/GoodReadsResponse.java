@@ -56,8 +56,8 @@ public class GoodReadsResponse {
                 NodeList descNodes = doc.getElementsByTagName("description");
                 NodeList isbnNodes = doc.getElementsByTagName("isbn");
                 NodeList ratingNodes = doc.getElementsByTagName("average_rating");
-                this.bk.bk.setDescription(descNodes.item(0).getTextContent().replaceAll("[<][/a-z]{1,20}[>]", ""));
-                this.bk.bk.setIsbn(Integer.parseInt(isbnNodes.item(0).getTextContent()));
+                this.bk.setDescription(descNodes.item(0).getTextContent().replaceAll("[<][/a-z]{1,20}[>]", ""));
+                this.bk.setIsbn(Integer.parseInt(isbnNodes.item(0).getTextContent()));
                 this.bk.AveRating = Double.parseDouble(ratingNodes.item(0).getTextContent());
             }else{
                 System.out.println(httpCon.getResponseMessage().toString());
