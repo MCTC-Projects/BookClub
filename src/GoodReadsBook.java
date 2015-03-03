@@ -17,15 +17,14 @@ import java.net.URL;
  *
  *
  */
-public class GoodReadsBook {
-    Book bk;
+public class GoodReadsBook extends Book{
     String imageUrl;
     Integer numPages;
     Integer numReviews;
     Integer numRatings;
 
 
-    GoodReadsBook(Book b) {this.bk = b;}
+    GoodReadsBook(String t,String a) {this.setTitle(t);this.setAuthor(a);}
 
     public String getImageUrl() {
         return imageUrl;
