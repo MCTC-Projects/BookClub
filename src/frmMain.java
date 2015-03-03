@@ -141,7 +141,7 @@ public class frmMain {
         btnEmailMembers.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                openEmailDialog();
             }
         });
     }
@@ -204,17 +204,17 @@ public class frmMain {
     private void openEmailDialog() {
         //TODO: change addBookDialog and dlgAddBook to emailDialog and dlgEmail
         //Initialize and open add book dialog
-//        addBookDialog = new dlgAddBook();
-//        addBookDialog.setTitle("Add Book");
-//
-//        //Set dimensions
-//        Dimension dimensions = new Dimension(300, 175);
-//        addBookDialog.setSize(dimensions);
-//        addBookDialog.setResizable(false);
-//
-//        CenterOnScreen(addBookDialog);
-//
-//        addBookDialog.setVisible(true);
+        dlgEmail emaildialog = new dlgEmail();
+        emaildialog.setTitle("Send Email");
+
+        //Set dimensions
+        Dimension dimensions = new Dimension(400, 400);
+        emaildialog.setSize(dimensions);
+        emaildialog.setResizable(false);
+
+        CenterOnScreen(emaildialog);
+
+        emaildialog.setVisible(true);
     }
 
     private void openAddBookDialog() {
@@ -269,11 +269,14 @@ public class frmMain {
     private void openShowBooksForm(GoodReadsBook book) {
         //Initialize form
         JFrame frame = new JFrame("frmShowBooks");
-        frame.setContentPane(new frmShowBooks().panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frmShowBooks showbooksform = new frmShowBooks();
+        frame.setContentPane(showbooksform.getPanel1());
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setTitle(book.getTitle());    //Form title
-
+        showbooksform.populateDescription(book);
+        showbooksform.setAuthorTxtField(book.getAuthor());
+        showbooksform.setTitleTxtField(book.getTitle());
         //Set dimension properties
         Dimension dimensions = new Dimension(600, 400);
         frame.setSize(dimensions);
