@@ -22,6 +22,23 @@ public class frmLogin {
                 if (isValidInput()) {
                     USER_EMAIL = txtEmail.getText();
                     USER_PASSWORD = txtPassword.getText();
+
+                    //Initialize form
+                    JFrame frame = new JFrame("frmMain");
+                    frame.setContentPane(new frmMain().panel1);
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    frame.pack();
+                    frame.setTitle("Book Club");    //Form title
+
+                    //Set dimension properties
+                    Dimension dimensions = new Dimension(600, 400);
+                    frame.setSize(dimensions);
+                    frame.setMinimumSize(dimensions);
+
+                    frmMain.CenterOnScreen(frame);
+
+                    //Show form
+                    frame.setVisible(true);
                 }
             }
         });

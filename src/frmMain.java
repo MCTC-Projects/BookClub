@@ -12,7 +12,7 @@ public class frmMain {
 
     //Initialize Form Components
     private JTabbedPane tabbedPane1;
-    private JPanel panel1;
+    public JPanel panel1;
     private JPanel tabHome;
     private JPanel tabMembers;
     private JPanel tabPastBooks;
@@ -286,33 +286,6 @@ public class frmMain {
 
         //Show form
         frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        //Initialize form
-        JFrame frame = new JFrame("frmMain");
-        frame.setContentPane(new frmMain().panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setTitle("Book Club");    //Form title
-
-        //Set dimension properties
-        Dimension dimensions = new Dimension(600, 400);
-        frame.setSize(dimensions);
-        frame.setMinimumSize(dimensions);
-
-        CenterOnScreen(frame);
-
-        //Show form
-        frame.setVisible(true);
-
-//        //Connect to DB
-//        DB db = new DB();
-//
-//        db.Connect();
-//
-//        args= new String[4];
-//        //DataSource.DataSource(args);
     }
 
     public static void CenterOnScreen(Window window) {
