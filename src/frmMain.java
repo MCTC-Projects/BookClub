@@ -63,7 +63,6 @@ public class frmMain {
 
 
         if (assignedReading != null) {
-            suggestionsBook = assignedReading;
             lboBookSuggestions.setEnabled(true);
             PopulateBookSuggestions(suggestionsBook.getTitle(), suggestionsBook.getAuthor());
         } else {
