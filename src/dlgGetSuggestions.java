@@ -1,16 +1,14 @@
 import javax.swing.*;
 import java.awt.event.*;
-import java.text.NumberFormat;
 
-public class dlgAddBook extends JDialog {
+public class dlgGetSuggestions extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTextField txtTitle;
     private JTextField txtAuthor;
-    private JTextField txtISBN;
 
-    public dlgAddBook() {
+    public dlgGetSuggestions() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -44,38 +42,19 @@ public class dlgAddBook extends JDialog {
     }
 
     private void onOK() {
-        if (isValidInput()) {
-            if (Validator.isPresent(txtISBN, "ISBN", false)) {
-                Book b = new Book(txtISBN.getText());
-                //TODO
-            } else {
-                Book b = new Book(txtTitle.getText(), txtAuthor.getText());
-                //TODO: set b as assigned book
-            }
-            dispose();
-        }
-    }
-
-    private boolean isValidInput() {
-        if (Validator.isPresent(txtISBN, "ISBN", false)) {
-            if (ISBN_Validator.ValidateISBN(txtISBN.getText())) {
-                return true;
-            } else {
-                txtISBN.grabFocus();
-                return false;
-            }
-        } else if (
-                Validator.isPresent(txtTitle, "Book Title", false) &&
-                Validator.isPresent(txtAuthor, "Author Name", false)) {
-                return true;
-        } else {
-            Validator.messageBox("Please enter either the book's title and author name, or its ISBN", "Entry Error");
-            return false;
-        }
+// add your code here
+        dispose();
     }
 
     private void onCancel() {
 // add your code here if necessary
         dispose();
+    }
+
+    public static void main(String[] args) {
+        dlgGetSuggestions dialog = new dlgGetSuggestions();
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
     }
 }

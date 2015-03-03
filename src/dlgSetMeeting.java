@@ -1,8 +1,5 @@
 import javax.swing.*;
-import javax.swing.text.MaskFormatter;
 import java.awt.event.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class dlgSetMeeting extends JDialog {
@@ -115,15 +112,9 @@ public class dlgSetMeeting extends JDialog {
                 + amPm;
 
         if (Validator.isPresent(txtLocation, "Location", true)) {
-            SimpleDateFormat df = new SimpleDateFormat("MMMMM dd, yyyy HH:mm a");
-            try {
-                Date dateTime = df.parse(dateTimeString);
-                Meeting meeting = new Meeting(dateTime, location);
-                meeting.UpdateMeetingInfo();
-                dispose();
-            } catch (ParseException pe) {
-                Validator.messageBox("Error processing date/time data\n" + pe, "Error");
-            }
+            Date dateTime = Validator.ParseDate(dateTimeString, Meeting.FRIENDLY_DATE_FORMAT);
+            Meeting.setNextMeeting(new Meeting(dateTime, location));
+            dispose();
         }
     }
 

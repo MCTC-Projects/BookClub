@@ -93,7 +93,7 @@ public class Validator {
     }
 
     public static boolean dateIsWithinRange(Date date, String name, Date min, Date max) {
-        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat df = new SimpleDateFormat(Meeting.SHORT_DATE_FORMAT);
         if (date.before(min) || date.after(max)) {
 
             messageBox(name + " must be a date between "
@@ -112,10 +112,45 @@ public class Validator {
         try {
             parsedDate = df.parse(date);
         } catch (ParseException pe) {
-            messageBox("Error processing date/time data\n" + pe, "Error");
+            messageBox("Problem processing date/time data\n" + pe, "Error");
             return null;
         }
         return parsedDate;
+    }
+
+    public static boolean isValidEmail(JTextField textField, String name, boolean displaysError) {
+        String error = "Invalid email address syntax!";
+
+        String s = textField.getText();
+        String[] parts = s.split("@", 1);
+
+        if (parts.length != 2) {
+            messageBox(error, "Invalid Email");
+            textField.grabFocus();
+            return false;
+        }
+
+        String domainPart = parts[1];
+
+        if (!domainPart.contains(".")) {
+            messageBox(error, "Invalid Email");
+            textField.grabFocus();
+            return false;
+        } else {
+            int dotFirstIndex = domainPart.indexOf('.');
+            int dotLastIndex = domainPart.lastIndexOf('.');
+
+            if (
+                    dotFirstIndex != dotLastIndex ||            //domain can't have more than one dot
+                    dotFirstIndex == 0 ||                       //dot can't be first character in domain
+                    dotLastIndex == domainPart.length() - 1     //dot can't be last character in domain
+                    ){
+                messageBox(error, "Invalid Email");
+                textField.grabFocus();
+                return false;
+            }
+            return true;
+        }
     }
 
     public static void messageBox(String message, String title)

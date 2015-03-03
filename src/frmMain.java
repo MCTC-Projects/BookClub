@@ -40,20 +40,36 @@ public class frmMain {
     private JButton btnViewBook;
     private JPanel pnlMeetingInfo;
     private JPanel pnlBookInfo;
+    private JButton btnGetSuggestions;
 
 
     //Create test book object
     private Book b = new Book("The Hobbit", "Tolkein");
     private Book assignedReading;
+    private Book suggestionsBook;
 
     //Create test meeting object
     private Date meetingDate = new Date();
     private Meeting m = new Meeting(meetingDate, "MCTC T-Building, Room T-3050");
     private Meeting nextMeeting;
 
+    //ArrayList of suggested books
+    public static ArrayList bookSuggestions = new ArrayList();
+
     public frmMain() {
-        assignedReading = b;
+        //Meeting.setAssignedReading(b);
+        //assignedReading = b;
         nextMeeting = m;
+
+
+        if (assignedReading != null) {
+            suggestionsBook = assignedReading;
+            lboBookSuggestions.setEnabled(true);
+            //TODO: populate suggestedBooks with book suggestions from api
+        } else {
+            lboBookSuggestions.setEnabled(false);
+            bookSuggestions.add("No book to base suggestions off of, please click \"Get Suggestions\"");
+        }
 
         /** HOME TAB **/
 
@@ -98,6 +114,23 @@ public class frmMain {
         });
 
         /** BOOK SUGGESTIONS TAB **/
+        UpdateBookSuggestionsTab();
+
+        btnGetSuggestions.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openGetSuggestionsDialog();
+            }
+        });
+    }
+
+    private void UpdateBookSuggestionsTab() {
+        DefaultListModel listModel = new DefaultListModel();
+
+        for (Object o : bookSuggestions) {
+            listModel.addElement(o);
+        }
+        lboBookSuggestions.setModel(listModel);
     }
 
     private void UpdateHomeTab() {
@@ -124,7 +157,7 @@ public class frmMain {
             pnlMeetingInfo.setVisible(true);
             lblMeetingNotSet.setVisible(false);
             btnSetMeeting.setText("Edit Meeting Info");
-            DateFormat df = new SimpleDateFormat("EEEE, MMMM dd, yyyy 'at' HH:mm a");
+            DateFormat df = new SimpleDateFormat(Meeting.LONG_FRIENDLY_DATE_FORMAT);
             lblLocation.setText(nextMeeting.getLocation());
             lblDateTime.setText(df.format(nextMeeting.getDateTime()));
         }
@@ -140,16 +173,7 @@ public class frmMain {
         setMeetingDialog.setSize(dimensions);
         setMeetingDialog.setResizable(false);
 
-        //Center form on screen
-        Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();   //Get screen size
-
-        int screenCenterX = screenDimensions.width / 2;
-        int screenCenterY = screenDimensions.height / 2;
-
-        int frameCenterX = setMeetingDialog.getSize().width / 2;
-        int frameCenterY = setMeetingDialog.getSize().height / 2;
-
-        setMeetingDialog.setLocation(screenCenterX - frameCenterX, screenCenterY - frameCenterY);
+        CenterOnScreen(setMeetingDialog);
 
         setMeetingDialog.setVisible(true);
     }
@@ -164,16 +188,7 @@ public class frmMain {
         addBookDialog.setSize(dimensions);
         addBookDialog.setResizable(false);
 
-        //Center form on screen
-        Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();   //Get screen size
-
-        int screenCenterX = screenDimensions.width / 2;
-        int screenCenterY = screenDimensions.height / 2;
-
-        int frameCenterX = addBookDialog.getSize().width / 2;
-        int frameCenterY = addBookDialog.getSize().height / 2;
-
-        addBookDialog.setLocation(screenCenterX - frameCenterX, screenCenterY - frameCenterY);
+        CenterOnScreen(addBookDialog);
 
         addBookDialog.setVisible(true);
     }
@@ -188,18 +203,24 @@ public class frmMain {
         reviewBookDialog.setSize(dimensions);
         reviewBookDialog.setMinimumSize(dimensions);
 
-        //Center form on screen
-        Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();   //Get screen size
-
-        int screenCenterX = screenDimensions.width / 2;
-        int screenCenterY = screenDimensions.height / 2;
-
-        int frameCenterX = reviewBookDialog.getSize().width / 2;
-        int frameCenterY = reviewBookDialog.getSize().height / 2;
-
-        reviewBookDialog.setLocation(screenCenterX - frameCenterX, screenCenterY - frameCenterY);
+        CenterOnScreen(reviewBookDialog);
 
         reviewBookDialog.setVisible(true);
+    }
+
+    private void openGetSuggestionsDialog() {
+        //Initialize and open review book dialog
+        dlgGetSuggestions getSuggestionsDialog = new dlgGetSuggestions();
+        getSuggestionsDialog.setTitle("Review Book");
+
+        //Set dimensions
+        Dimension dimensions = new Dimension(315, 200);
+        getSuggestionsDialog.setSize(dimensions);
+        getSuggestionsDialog.setMinimumSize(dimensions);
+
+        CenterOnScreen(getSuggestionsDialog);
+
+        getSuggestionsDialog.setVisible(true);
     }
 
     public static void main(String[] args) {
@@ -211,20 +232,11 @@ public class frmMain {
         frame.setTitle("Book Club");    //Form title
 
         //Set dimension properties
-        Dimension dimensions = new Dimension(500, 400);
+        Dimension dimensions = new Dimension(600, 400);
         frame.setSize(dimensions);
         frame.setMinimumSize(dimensions);
 
-        //Center form on screen
-        Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();   //Get screen size
-
-        int screenCenterX = screenDimensions.width / 2;
-        int screenCenterY = screenDimensions.height / 2;
-
-        int frameCenterX = frame.getSize().width / 2;
-        int frameCenterY = frame.getSize().height / 2;
-
-        frame.setLocation(screenCenterX - frameCenterX, screenCenterY - frameCenterY);
+        CenterOnScreen(frame);
 
         //Show form
         frame.setVisible(true);
@@ -236,5 +248,20 @@ public class frmMain {
 //
 //        args= new String[4];
 //        //DataSource.DataSource(args);
+    }
+
+    public static void CenterOnScreen(Window window) {
+        //Center window on screen
+        Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();   //Get screen size
+
+        //Screen's center point
+        int screenCenterX = screenDimensions.width / 2;
+        int screenCenterY = screenDimensions.height / 2;
+
+        //Window's center point
+        int windowCenterX = window.getSize().width / 2;
+        int windowCenterY = window.getSize().height / 2;
+
+        window.setLocation(screenCenterX - windowCenterX, screenCenterY - windowCenterY);
     }
 }
