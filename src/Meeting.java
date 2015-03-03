@@ -9,7 +9,7 @@ import java.util.Date;
 public class Meeting {
     private Date DateTime;
     private String Location;
-    private Book AssignedReading;
+    private static Book AssignedReading;
 
     public Meeting(Date dateTime, String location) {
         this.DateTime = dateTime;
@@ -46,12 +46,12 @@ public class Meeting {
         return this.AssignedReading;
     }
 
-    public void setAssignedReading(Book book) {
-        this.AssignedReading = book;
-        this.UpdateMeetingInfo();
+    public static void setAssignedReading(Book book) {
+        AssignedReading = book;
+        UpdateMeetingInfo();
     }
 
-    public void UpdateMeetingInfo() {
+    public static void UpdateMeetingInfo() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("NextMeetingInfo.txt"));
 

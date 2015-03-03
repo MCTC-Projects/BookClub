@@ -46,6 +46,7 @@ public class frmMain {
     //Create test book object
     private Book b = new Book("The Hobbit", "Tolkein");
     private Book assignedReading;
+    private Book suggestionsBook;
 
     //Create test meeting object
     private Date meetingDate = new Date();
@@ -53,7 +54,8 @@ public class frmMain {
     private Meeting nextMeeting;
 
     public frmMain() {
-        assignedReading = b;
+        Meeting.setAssignedReading(b);
+        //assignedReading = b;
         nextMeeting = m;
 
         /** HOME TAB **/
@@ -99,7 +101,14 @@ public class frmMain {
         });
 
         /** BOOK SUGGESTIONS TAB **/
-        Book suggestionsBook = assignedReading;
+        if (assignedReading != null) {
+            suggestionsBook = assignedReading;
+            //TODO: populate list box from suggested readings based on book
+        } else {
+            lboBookSuggestions.clearSelection();
+            lboBookSuggestions.add(new JLabel("No book selected, click \"Get Suggestions...\""));
+        }
+
     }
 
     private void UpdateHomeTab() {

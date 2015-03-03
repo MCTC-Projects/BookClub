@@ -47,17 +47,17 @@ public class dlgAddBook extends JDialog {
         if (isValidInput()) {
             if (Validator.isPresent(txtISBN, "ISBN", false)) {
                 Book b = new Book(txtISBN.getText());
-                //set b as assigned book
+                //TODO
             } else {
                 Book b = new Book(txtTitle.getText(), txtAuthor.getText());
-                //set b as assigned book
+                //TODO: set b as assigned book
             }
             dispose();
         }
     }
 
     private boolean isValidInput() {
-        if (Validator.isPresent(txtISBN, "ISBN", true)) {
+        if (Validator.isPresent(txtISBN, "ISBN", false)) {
             if (ISBN_Validator.ValidateISBN(txtISBN.getText())) {
                 return true;
             } else {

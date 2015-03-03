@@ -15,7 +15,9 @@ public class frmLogin {
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO
+                if (isValidInput()) {
+
+                }
             }
         });
     }
@@ -23,7 +25,7 @@ public class frmLogin {
     private boolean isValidInput() {
         return
                 Validator.isPresent(txtEmail, "Email", true) &&
-
+                Validator.isValidEmail(txtEmail, "Email", true);
     }
 
     public static void main(String[] args) {

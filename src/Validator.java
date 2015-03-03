@@ -120,20 +120,36 @@ public class Validator {
 
     public static boolean isValidEmail(JTextField textField, String name, boolean displaysError) {
         String error = "Invalid email address syntax!";
+
         String s = textField.getText();
         String[] parts = s.split("@", 1);
+
         if (parts.length != 2) {
             messageBox(error, "Invalid Email");
             textField.grabFocus();
             return false;
         }
+
         String domainPart = parts[1];
-        int dotFirstIndex = domainPart.indexOf('.');
-        int dotLastIndex = domainPart.lastIndexOf('.');
+
         if (!domainPart.contains(".")) {
             messageBox(error, "Invalid Email");
             textField.grabFocus();
             return false;
+        } else {
+            int dotFirstIndex = domainPart.indexOf('.');
+            int dotLastIndex = domainPart.lastIndexOf('.');
+
+            if (
+                    dotFirstIndex != dotLastIndex ||            //domain can't have more than one dot
+                    dotFirstIndex == 0 ||                       //dot can't be first character in domain
+                    dotLastIndex == domainPart.length() - 1     //dot can't be last character in domain
+                    ){
+                messageBox(error, "Invalid Email");
+                textField.grabFocus();
+                return false;
+            }
+            return true;
         }
     }
 

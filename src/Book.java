@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 
 /**
  * Created by Toby on 2/12/2015.
@@ -8,7 +8,7 @@
 public class Book {
     private String title,author,isbn;
     private Rating rating;
-
+    public static ArrayList<Book> pastBooks;
 
 
     public Book(String t, String a)
