@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by Haru on 2/19/2015.
@@ -42,6 +43,7 @@ public class frmMain {
     private JPanel pnlBookInfo;
     private JButton btnGetSuggestions;
 
+    private ArrayList<Book> booksfromdb;
 
     //Create test book object
     //private Book b = new Book("The Hobbit", "Tolkien");
@@ -64,6 +66,7 @@ public class frmMain {
 //open database connection
         //DB.Connect();
 
+
         if (assignedReading != null) {
             lboBookSuggestions.setEnabled(true);
             PopulateBookSuggestions(assignedReading.getTitle(), assignedReading.getAuthor());
@@ -84,6 +87,19 @@ public class frmMain {
                 openSetMeetingDialog();
             }
         });
+        DefaultListModel dlm = new DefaultListModel();
+        booksfromdb = DB.getAllBooks();
+        int l = booksfromdb.size();
+        int c = 0;
+        String[] books = new String[l];
+        while (c< l){
+            Book b = booksfromdb.get(c);
+            dlm.addElement(b.getTitle());
+
+        }
+
+        lboPastBooks.setModel(dlm);
+
 
         //Add Book
         btnAddBook.addActionListener(new ActionListener() {
@@ -114,6 +130,7 @@ public class frmMain {
                 }
             }
         });
+
 
         /** BOOK SUGGESTIONS TAB **/
         UpdateBookSuggestionsTab();
