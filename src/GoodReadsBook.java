@@ -89,6 +89,6 @@ public class GoodReadsBook extends Book{
 
     @Override
     public String toString() {
-        return this.bk.getTitle() + "; " + this.bk.getAuthor();
+        return this.getTitle() + "; " + this.getAuthor();
     }
 }
