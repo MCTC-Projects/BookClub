@@ -104,4 +104,9 @@ public class Book {
             return null;
         }
     }
+
+    @Override
+    public String toString() {
+        return this.getTitle() + "; " + this.getAuthor();
+    }
 }

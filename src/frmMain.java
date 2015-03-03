@@ -128,7 +128,8 @@ public class frmMain {
         DefaultListModel listModel = new DefaultListModel();
 
         for (Object o : bookSuggestions) {
-            listModel.addElement(o);
+            //TODO: get String data from book objects
+            listModel.addElement(o.toString());
         }
         lboBookSuggestions.setModel(listModel);
     }
