@@ -25,8 +25,8 @@ public class Rating {
         rating = r;
         comments = c;
     };
-
-    public String getBook() {
+    public Book getBook(){return this.book;}
+    public String getIsbn() {
         return isbn;
     }
 
@@ -36,7 +36,8 @@ public class Rating {
     public int getRating() {
         return rating;
     }
-    public int getMember(){
+    public int getMID(){
         return mid;
     }
+    public Member getMember(){return this.member;}
 }

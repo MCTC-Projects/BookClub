@@ -211,7 +211,7 @@ public class DB {
             Statement stmt = c.createStatement();
             //sql statement
             String sql = "INSERT INTO ratings (mid, isbn, rating, comments) " +
-                    "VALUES (" + r.getMember() + ", " + r.getBook() + ", " + r.getRating() + "," + r.getComments() + ");";
+                    "VALUES (" + r.getMID() + ", " + r.getIsbn() + ", " + r.getRating() + "," + r.getComments() + ");";
             stmt.executeUpdate(sql);
 
         } catch (Exception e) {
