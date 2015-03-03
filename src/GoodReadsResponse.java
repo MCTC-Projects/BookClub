@@ -70,6 +70,12 @@ public class GoodReadsResponse {
                 NodeList descNodes = doc.getElementsByTagName("description");
                 NodeList isbnNodes = doc.getElementsByTagName("isbn");
                 NodeList ratingNodes = doc.getElementsByTagName("average_rating");
+                if(this.bk.getAuthor()==null||this.bk.getTitle()==null){
+                    NodeList authorNodes = doc.getElementsByTagName("author");
+                    NodeList titleNodes = doc.getElementsByTagName("title");
+                    this.bk.setAuthor(authorNodes.item(0).getTextContent());
+                    this.bk.setTitle(titleNodes.item(0).getTextContent());
+                }
                 this.bk.setDescription(descNodes.item(0).getTextContent().replaceAll("[<][/a-z]{1,20}[>]", ""));
                 this.bk.setISBN(isbnNodes.item(0).getTextContent());
                 this.bk.AveRating = Double.parseDouble(ratingNodes.item(0).getTextContent());
