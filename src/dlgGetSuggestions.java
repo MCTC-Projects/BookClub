@@ -42,12 +42,26 @@ public class dlgGetSuggestions extends JDialog {
     }
 
     private void onOK() {
-        //
-        dispose();
+        if (isValidInput()) {
+            try {
+                String title = txtTitle.getText();
+                String author = txtAuthor.getText();
+                frmMain.PopulateBookSuggestions(title, author);
+                dispose();
+            } catch (Exception e) {
+                Validator.messageBox(e.toString() + "\n\n" + e.getMessage(), "Error");
+            }
+        }
     }
 
     private void onCancel() {
 // add your code here if necessary
         dispose();
+    }
+
+    private boolean isValidInput() {
+        return
+                Validator.isPresent(txtTitle, "Title", true) &&
+                Validator.isPresent(txtAuthor, "Author", true);
     }
 }
