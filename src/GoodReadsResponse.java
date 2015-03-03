@@ -4,6 +4,7 @@ import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.soap.Node;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
@@ -23,7 +24,8 @@ public class GoodReadsResponse {
 
     public GoodReadsResponse(String title,String author){
         Book b = new Book(title, author);
-        bk=new GoodReadsBook(b);}
+        this.bk=new GoodReadsBook(b);
+        this.SuggestedBooks = new ArrayList<GoodReadsBook>();}
 
     public void populateFromAPI(){
         try {
@@ -54,12 +56,14 @@ public class GoodReadsResponse {
                 Document doc = dBuilder.parse(is);
 
                 doc.getDocumentElement().normalize();
+                NodeList idNodes = doc.getElementsByTagName("id");
                 NodeList descNodes = doc.getElementsByTagName("description");
                 NodeList isbnNodes = doc.getElementsByTagName("isbn");
                 NodeList ratingNodes = doc.getElementsByTagName("average_rating");
                 this.bk.setDescription(descNodes.item(0).getTextContent().replaceAll("[<][/a-z]{1,20}[>]", ""));
                 this.bk.bk.setISBN(isbnNodes.item(0).getTextContent());
                 this.bk.AveRating = Double.parseDouble(ratingNodes.item(0).getTextContent());
+                this.bk.setId(Integer.parseInt(idNodes.item(0).getTextContent()));
             }else{
                 System.out.println(httpCon.getResponseMessage().toString());
             }
@@ -74,15 +78,20 @@ public class GoodReadsResponse {
 
     }
 
+    public ArrayList<GoodReadsBook> getSuggestedBooks() {
+        return SuggestedBooks;
+    }
+
     public void searchForBooks(){
         try {
 
             URL firstUrl = new URL("http://www.goodreads.com/book/show.xml");
-            URL url = new URL(firstUrl.toString()+"?key=J3GUE84DV610O7QQhEp5Jw&title="+this.bk.bk.getTitle().replace(' ','+')+"&author="+this.bk.bk.getAuthor().replace(' ','+'));
+            URL url = new URL(firstUrl.toString()+"?key=J3GUE84DV610O7QQhEp5Jw&id="+this.bk.getId());
             HttpURLConnection httpCon = (HttpURLConnection)url.openConnection();
             httpCon.setRequestMethod("GET");
             httpCon.setReadTimeout(15*1000);
             httpCon.connect();
+
             if(httpCon.getResponseCode()==200){
                 //I got my xml parsing instruction from this http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/ website
 
@@ -103,12 +112,16 @@ public class GoodReadsResponse {
                 Document doc = dBuilder.parse(is);
 
                 doc.getDocumentElement().normalize();
-                NodeList descNodes = doc.getElementsByTagName("description");
-                NodeList isbnNodes = doc.getElementsByTagName("isbn");
-                NodeList ratingNodes = doc.getElementsByTagName("average_rating");
-                this.bk.setDescription(descNodes.item(0).getTextContent().replaceAll("[<][/a-z]{1,20}[>]", ""));
-                this.bk.bk.setISBN(isbnNodes.item(0).getTextContent());
-                this.bk.AveRating = Double.parseDouble(ratingNodes.item(0).getTextContent());
+                NodeList SimilarBookNodes = doc.getElementsByTagName("book");
+                for(int i=1;i<SimilarBookNodes.getLength();i++){
+                    Book bk = new Book(SimilarBookNodes.item(i).getChildNodes().item(1).getTextContent(),SimilarBookNodes.item(i).getChildNodes().item(8).getTextContent().split("    ")[2]);
+                    GoodReadsBook newbook = new GoodReadsBook(bk);
+
+                    newbook.setAveRating(Double.parseDouble(SimilarBookNodes.item(i).getChildNodes().item(6).getTextContent()));
+                    newbook.setImageUrl(SimilarBookNodes.item(i).getChildNodes().item(5).getTextContent());
+                    this.SuggestedBooks.add(newbook);
+                }
+
             }else{
                 System.out.println(httpCon.getResponseMessage().toString());
             }

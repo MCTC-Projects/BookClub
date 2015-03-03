@@ -19,8 +19,61 @@ import java.net.URL;
  */
 public class GoodReadsBook {
     Book bk;
-    URL imageUrl;
-    Integer numPages, numReviews, numRatings;
+    String imageUrl;
+    Integer numPages;
+    Integer numReviews;
+    Integer numRatings;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Integer getNumPages() {
+        return numPages;
+    }
+
+    public void setNumPages(Integer numPages) {
+        this.numPages = numPages;
+    }
+
+    public Integer getNumReviews() {
+        return numReviews;
+    }
+
+    public void setNumReviews(Integer numReviews) {
+        this.numReviews = numReviews;
+    }
+
+    public Integer getNumRatings() {
+        return numRatings;
+    }
+
+    public void setNumRatings(Integer numRatings) {
+        this.numRatings = numRatings;
+    }
+
+    public Double getAveRating() {
+        return AveRating;
+    }
+
+    public void setAveRating(Double aveRating) {
+        AveRating = aveRating;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Integer getId() {
+
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    Integer id;
     Double AveRating;
     String description;
 
@@ -30,6 +83,6 @@ public class GoodReadsBook {
 
     GoodReadsBook(Book b) {this.bk = b;}
 
-    public void setImageUrl(URL u){this.imageUrl=u;}
+    public void setImageUrl(String u){this.imageUrl=u;}
     public void setNumPages(int nPages){this.numPages = nPages;}
 }
