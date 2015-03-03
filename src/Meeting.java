@@ -62,6 +62,18 @@ public class Meeting {
     public static void setNextMeeting(Meeting meeting) {
         nextMeeting = meeting;
         UpdateNextMeetingInfo();
+
+        Emailer emailer = new Emailer();
+
+        String senderEmail;
+        String senderPassword;
+        String[] recipients;
+        String subject;
+        String message;
+
+//        for (String r : recipients) {
+//            emailer.sendEmail(senderEmail, senderPassword, r, subject, message);
+//        }
     }
 
     public static void UpdateNextMeetingInfo() {
