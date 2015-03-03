@@ -141,7 +141,7 @@ public class frmMain {
         btnEmailMembers.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                openEmailDialog();
             }
         });
     }
@@ -204,17 +204,17 @@ public class frmMain {
     private void openEmailDialog() {
         //TODO: change addBookDialog and dlgAddBook to emailDialog and dlgEmail
         //Initialize and open add book dialog
-//        addBookDialog = new dlgAddBook();
-//        addBookDialog.setTitle("Add Book");
-//
-//        //Set dimensions
-//        Dimension dimensions = new Dimension(300, 175);
-//        addBookDialog.setSize(dimensions);
-//        addBookDialog.setResizable(false);
-//
-//        CenterOnScreen(addBookDialog);
-//
-//        addBookDialog.setVisible(true);
+        dlgEmail emaildialog = new dlgEmail();
+        emaildialog.setTitle("Send Email");
+
+        //Set dimensions
+        Dimension dimensions = new Dimension(400, 400);
+        emaildialog.setSize(dimensions);
+        emaildialog.setResizable(false);
+
+        CenterOnScreen(emaildialog);
+
+        emaildialog.setVisible(true);
     }
 
     private void openAddBookDialog() {
