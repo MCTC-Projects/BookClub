@@ -241,11 +241,14 @@ public class frmMain {
     private void openShowBooksForm(GoodReadsBook book) {
         //Initialize form
         JFrame frame = new JFrame("frmShowBooks");
-        frame.setContentPane(new frmShowBooks().panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frmShowBooks showbooksform = new frmShowBooks();
+        frame.setContentPane(showbooksform.getPanel1());
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setTitle(book.getTitle());    //Form title
-
+        showbooksform.populateDescription(book);
+        showbooksform.setAuthorTxtField(book.getAuthor());
+        showbooksform.setTitleTxtField(book.getTitle());
         //Set dimension properties
         Dimension dimensions = new Dimension(600, 400);
         frame.setSize(dimensions);

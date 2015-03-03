@@ -55,6 +55,7 @@
           </grid>
         </constraints>
         <properties>
+          <editable value="false"/>
           <text value=""/>
         </properties>
       </component>
@@ -69,6 +70,7 @@
             <constraints/>
             <properties>
               <editable value="false"/>
+              <lineWrap value="true"/>
               <text value=""/>
             </properties>
           </component>
