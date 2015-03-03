@@ -272,4 +272,9 @@ public class frmMain {
         response.searchForBooks();
         bookSuggestions = response.getSuggestedBooks();
     }
+
+    public static boolean WindowClosed(Window window) {
+        //TODO
+        return false;
+    }
 }
