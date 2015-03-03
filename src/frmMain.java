@@ -63,13 +63,8 @@ public class frmMain {
 
 
         if (assignedReading != null) {
-            suggestionsBook = assignedReading;
             lboBookSuggestions.setEnabled(true);
-            //TODO: populate suggestedBooks with book suggestions from api
-            GoodReadsResponse response = new GoodReadsResponse(suggestionsBook.getTitle(), suggestionsBook.getAuthor());
-            response.populateFromAPI();
-            response.searchForBooks();
-            bookSuggestions = response.getSuggestedBooks();
+            PopulateBookSuggestions(suggestionsBook.getTitle(), suggestionsBook.getAuthor());
         } else {
             lboBookSuggestions.setEnabled(false);
             bookSuggestions.clear();
@@ -269,5 +264,12 @@ public class frmMain {
         int windowCenterY = window.getSize().height / 2;
 
         window.setLocation(screenCenterX - windowCenterX, screenCenterY - windowCenterY);
+    }
+
+    private void PopulateBookSuggestions(String bookTitle, String authorName) {
+        GoodReadsResponse response = new GoodReadsResponse(bookTitle, authorName);
+        response.populateFromAPI();
+        response.searchForBooks();
+        bookSuggestions = response.getSuggestedBooks();
     }
 }

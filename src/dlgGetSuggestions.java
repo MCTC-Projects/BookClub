@@ -42,19 +42,12 @@ public class dlgGetSuggestions extends JDialog {
     }
 
     private void onOK() {
-// add your code here
+        //
         dispose();
     }
 
     private void onCancel() {
 // add your code here if necessary
         dispose();
-    }
-
-    public static void main(String[] args) {
-        dlgGetSuggestions dialog = new dlgGetSuggestions();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
     }
 }
