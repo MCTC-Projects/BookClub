@@ -10,10 +10,7 @@ public class dlgGetSuggestions extends JDialog {
 
 
 
-    public String[] getTitleAndAuthor(){
-        String[] authorAndTitle = {this.txtTitle.getText(),this.txtAuthor.getText()};
-        return authorAndTitle;
-    }
+
 
     public dlgGetSuggestions() {
         setContentPane(contentPane);
