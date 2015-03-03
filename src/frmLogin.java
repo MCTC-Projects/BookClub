@@ -10,13 +10,18 @@ public class frmLogin {
     private JTextField txtEmail;
     private JButton btnLogin;
     private JPanel panel1;
+    private JPasswordField txtPassword;
+
+    public static String USER_EMAIL;
+    public static String USER_PASSWORD;
 
     public frmLogin() {
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (isValidInput()) {
-
+                    USER_EMAIL = txtEmail.getText();
+                    USER_PASSWORD = txtPassword.getText();
                 }
             }
         });
@@ -25,7 +30,8 @@ public class frmLogin {
     private boolean isValidInput() {
         return
                 Validator.isPresent(txtEmail, "Email", true) &&
-                Validator.isValidEmail(txtEmail, "Email", true);
+                Validator.isPresent(txtPassword, "Password", true) &&
+                Validator.isValidGmailAddress(txtEmail, "Email", true);
     }
 
     public static void main(String[] args) {
