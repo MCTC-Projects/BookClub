@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.text.ParseException;
 
 /**
  * Created by DayDay on 3/1/2015.
@@ -16,6 +17,11 @@ public class ISBN_Validator {
             Validator.messageBox(message, "Entry Error");
             return false;
         }
+    }
+
+    public static long isbn13ToLong(String isbnString) {
+        long isbnLong = Long.parseLong(isbnString);
+        return isbnLong;
     }
 
     private static boolean ISBN10Validator(String ISBN10) {
