@@ -22,6 +22,10 @@ public class GoodReadsResponse {
 
     //The isbn for GoodReads takes 10 digit and 13 digit without needing to specify
 
+    public GoodReadsResponse(GoodReadsBook grb){
+        this.bk = grb;
+    }
+
     public GoodReadsResponse(String title,String author){
         Book b = new Book(title, author);
         this.bk=new GoodReadsBook(b);
@@ -29,10 +33,16 @@ public class GoodReadsResponse {
 
     public void populateFromAPI(){
         try {
+            if(this.bk.bk.getISBN()==null) {
 
-            URL firstUrl = new URL("http://www.goodreads.com/book/title.xml");
-            URL url = new URL(firstUrl.toString()+"?key=J3GUE84DV610O7QQhEp5Jw&title="+this.bk.bk.getTitle().replace(' ','+')+"&author="+this.bk.bk.getAuthor().replace(' ','+'));
-            HttpURLConnection httpCon = (HttpURLConnection)url.openConnection();
+                URL firstUrl = new URL("http://www.goodreads.com/book/title.xml");
+                URL url = new URL(firstUrl.toString() + "?key=J3GUE84DV610O7QQhEp5Jw&title=" + this.bk.bk.getTitle().replace(' ', '+') + "&author=" + this.bk.bk.getAuthor().replace(' ', '+'));
+            }else{
+                URL firstUrl = new URL("http://www.goodreads.com/book/title.xml");
+                URL url = new URL(firstUrl.toString() + "?key=J3GUE84DV610O7QQhEp5Jw&isbn=" + this.bk.bk.getISBN());
+            }
+
+                HttpURLConnection httpCon = (HttpURLConnection)url.openConnection();
             httpCon.setRequestMethod("GET");
             httpCon.setReadTimeout(15*1000);
             httpCon.connect();
