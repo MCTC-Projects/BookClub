@@ -40,6 +40,7 @@ public class frmMain {
     private JButton btnViewBook;
     private JPanel pnlMeetingInfo;
     private JPanel pnlBookInfo;
+    private JButton btnGetSuggestions;
 
 
     //Create test book object
@@ -98,6 +99,7 @@ public class frmMain {
         });
 
         /** BOOK SUGGESTIONS TAB **/
+        Book suggestionsBook = assignedReading;
     }
 
     private void UpdateHomeTab() {
@@ -143,9 +145,11 @@ public class frmMain {
         //Center form on screen
         Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();   //Get screen size
 
+        //Screen's center point
         int screenCenterX = screenDimensions.width / 2;
         int screenCenterY = screenDimensions.height / 2;
 
+        //Form's center point
         int frameCenterX = setMeetingDialog.getSize().width / 2;
         int frameCenterY = setMeetingDialog.getSize().height / 2;
 
@@ -167,9 +171,11 @@ public class frmMain {
         //Center form on screen
         Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();   //Get screen size
 
+        //Screen's center point
         int screenCenterX = screenDimensions.width / 2;
         int screenCenterY = screenDimensions.height / 2;
 
+        //Form's center point
         int frameCenterX = addBookDialog.getSize().width / 2;
         int frameCenterY = addBookDialog.getSize().height / 2;
 
@@ -191,9 +197,11 @@ public class frmMain {
         //Center form on screen
         Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();   //Get screen size
 
+        //Screen's center point
         int screenCenterX = screenDimensions.width / 2;
         int screenCenterY = screenDimensions.height / 2;
 
+        //Form's center point
         int frameCenterX = reviewBookDialog.getSize().width / 2;
         int frameCenterY = reviewBookDialog.getSize().height / 2;
 
@@ -218,9 +226,11 @@ public class frmMain {
         //Center form on screen
         Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();   //Get screen size
 
+        //Screen's center point
         int screenCenterX = screenDimensions.width / 2;
         int screenCenterY = screenDimensions.height / 2;
 
+        //Form's center point
         int frameCenterX = frame.getSize().width / 2;
         int frameCenterY = frame.getSize().height / 2;
 
