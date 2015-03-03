@@ -60,7 +60,7 @@ public class frmMain {
         //Meeting.setAssignedReading(b);
         assignedReading = b;
         nextMeeting = m;
-
+        suggestionsBook = b;
 
         if (assignedReading != null) {
             lboBookSuggestions.setEnabled(true);
@@ -272,4 +272,5 @@ public class frmMain {
         response.searchForBooks();
         bookSuggestions = response.getSuggestedBooks();
     }
+
 }
