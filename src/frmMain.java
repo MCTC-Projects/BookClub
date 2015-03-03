@@ -120,6 +120,20 @@ public class frmMain {
                 openGetSuggestionsDialog();
             }
         });
+        btnViewBook.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lboBookSuggestions.isSelectionEmpty()) {
+                    Validator.messageBox("Please select a book.", "Error");
+                } else if (lboBookSuggestions.getSelectedIndices().length > 1) {
+                    Validator.messageBox("Please select one book.", "Error");
+                } else {
+                    GoodReadsBook book = (GoodReadsBook)bookSuggestions.get(lboBookSuggestions.getSelectedIndex());
+
+                    openShowBooksForm(book);
+                }
+            }
+        });
     }
 
     private void UpdateBookSuggestionsTab() {
@@ -222,6 +236,25 @@ public class frmMain {
         getSuggestionsDialog.setVisible(true);
 
         //TODO: call UpdateBookSuggestionsTab() upon closing dialog
+    }
+
+    private void openShowBooksForm(GoodReadsBook book) {
+        //Initialize form
+        JFrame frame = new JFrame("frmShowBooks");
+        frame.setContentPane(new frmShowBooks().panel1);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setTitle(book.getTitle());    //Form title
+
+        //Set dimension properties
+        Dimension dimensions = new Dimension(600, 400);
+        frame.setSize(dimensions);
+        frame.setMinimumSize(dimensions);
+
+        CenterOnScreen(frame);
+
+        //Show form
+        frame.setVisible(true);
     }
 
     public static void main(String[] args) {
