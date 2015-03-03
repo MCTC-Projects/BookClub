@@ -55,10 +55,14 @@ public class frmMain {
     //ArrayList of suggested books
     private static ArrayList bookSuggestions = new ArrayList();
 
+
+
     public frmMain() {
         //Meeting.setAssignedReading(b);
         assignedReading = b;
         nextMeeting = m;
+//open database connection
+        DB.Connect();
 
         if (assignedReading != null) {
             lboBookSuggestions.setEnabled(true);
@@ -204,6 +208,8 @@ public class frmMain {
         CenterOnScreen(addBookDialog);
 
         addBookDialog.setVisible(true);
+
+
     }
 
     private void openBookReviewDialog() {
@@ -307,5 +313,10 @@ public class frmMain {
         response.populateFromAPI();
         response.searchForBooks();
         bookSuggestions = response.getSuggestedBooks();
+    }
+
+    public static boolean WindowClosed(Window window) {
+        //TODO
+        return false;
     }
 }

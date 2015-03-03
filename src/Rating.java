@@ -6,19 +6,19 @@
 public class Rating {
     private String comments;
     private int rating;
-    private Book book;
-    private Member member;
+    private String isbn;
+    private int mid;
 
-    public Rating(Book b, Member m, int r, String c)
+    public Rating(String i, int m, int r, String c)
     {
-        book = b;
-        member = m;
+        isbn = i;
+        mid = m;
         rating = r;
         comments = c;
     }
 
-    public Book getBook() {
-        return book;
+    public String getBook() {
+        return isbn;
     }
 
     public String getComments() {
@@ -27,7 +27,7 @@ public class Rating {
     public int getRating() {
         return rating;
     }
-    public Member getMember(){
-        return member;
+    public int getMember(){
+        return mid;
     }
 }

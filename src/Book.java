@@ -7,13 +7,14 @@ import java.util.ArrayList;
  * makes a book class
  */
 public class Book {
-    private String title,author,isbn;
+    private String title,author,isbn ;
     private Rating rating;
     public static Book currentBook;
     public static ArrayList<Book> pastBooks;
 
-    public Book(String t, String a)
+    public Book(String i, String t, String a)
     {
+        isbn = i;
         title = t;
         author = a;
     }
@@ -97,7 +98,7 @@ public class Book {
                         b.setAuthor(bookData[2]);
                     }
                 } else {
-                    b = new Book(bookData[1], bookData[2]);
+                    b = new Book(bookData[0],bookData[1], bookData[2]);
                 }
                 return b;
             }
