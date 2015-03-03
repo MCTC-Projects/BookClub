@@ -24,7 +24,8 @@ public class GoodReadsResponse {
 
     public GoodReadsResponse(String title,String author){
         Book b = new Book(title, author);
-        bk=new GoodReadsBook(b);}
+        this.bk=new GoodReadsBook(b);
+        this.SuggestedBooks = new ArrayList<GoodReadsBook>();}
 
     public void populateFromAPI(){
         try {
@@ -77,6 +78,10 @@ public class GoodReadsResponse {
 
     }
 
+    public ArrayList<GoodReadsBook> getSuggestedBooks() {
+        return SuggestedBooks;
+    }
+
     public void searchForBooks(){
         try {
 
@@ -111,7 +116,10 @@ public class GoodReadsResponse {
                 for(int i=1;i<SimilarBookNodes.getLength();i++){
                     Book bk = new Book(SimilarBookNodes.item(i).getChildNodes().item(1).getTextContent(),SimilarBookNodes.item(i).getChildNodes().item(8).getTextContent().split("    ")[2]);
                     GoodReadsBook newbook = new GoodReadsBook(bk);
-                    System.out.println(SimilarBookNodes.item(i).getChildNodes().item(6).getTextContent());
+
+                    newbook.setAveRating(Double.parseDouble(SimilarBookNodes.item(i).getChildNodes().item(6).getTextContent()));
+                    newbook.setImageUrl(SimilarBookNodes.item(i).getChildNodes().item(5).getTextContent());
+                    this.SuggestedBooks.add(newbook);
                 }
 
             }else{

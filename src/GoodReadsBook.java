@@ -19,12 +19,12 @@ import java.net.URL;
  */
 public class GoodReadsBook {
     Book bk;
-    URL imageUrl;
+    String imageUrl;
     Integer numPages;
     Integer numReviews;
     Integer numRatings;
 
-    public URL getImageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
@@ -83,6 +83,6 @@ public class GoodReadsBook {
 
     GoodReadsBook(Book b) {this.bk = b;}
 
-    public void setImageUrl(URL u){this.imageUrl=u;}
+    public void setImageUrl(String u){this.imageUrl=u;}
     public void setNumPages(int nPages){this.numPages = nPages;}
 }
