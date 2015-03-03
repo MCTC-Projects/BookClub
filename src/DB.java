@@ -8,14 +8,17 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DB {
-    public Connection c = null;
-    public ResultSet rs = null;
-    public Statement statement = null;
+    public static Connection c = null;
+    public static ResultSet rs = null;
+    public static Statement statement = null;
 
 
-    public void Connect() {
+    public static void  Connect() {
 
 
+        //Connection c = null;
+        //ResultSet rs = null;
+        //Statement statement = null;
         try {
             Class.forName("org.sqlite.JDBC");
 
@@ -208,7 +211,7 @@ public class DB {
             Statement stmt = c.createStatement();
             //sql statement
             String sql = "INSERT INTO ratings (mid, isbn, rating, comments) " +
-                    "VALUES (" + r.getMid() + ", " + r.getISBN() + ", " + r.getRating() + "," + r.getComments() + ");";
+                    "VALUES (" + r.getMember() + ", " + r.getBook() + ", " + r.getRating() + "," + r.getComments() + ");";
             stmt.executeUpdate(sql);
 
         } catch (Exception e) {
@@ -256,7 +259,7 @@ public class DB {
             String sql = "select * from ratings where isbn = " + isbn + ";";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                int i = rs.getInt("isbn");
+                String i = rs.getString("isbn");
                 int m = rs.getInt("mid");
                 int r = rs.getInt("rating");
                 String c = rs.getString("comments");
@@ -283,7 +286,7 @@ public class DB {
             String sql = "select * from ratings where mid = " + mid + ";";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                int i = rs.getInt("isbn");
+                String i = rs.getString("isbn");
                 int m = rs.getInt("mid");
                 int r = rs.getInt("rating");
                 String c = rs.getString("comments");
@@ -312,7 +315,7 @@ public class DB {
             ResultSet rs = stmt.executeQuery(sql);
             //pull members into arraylist
             while (rs.next()) {
-                int i = rs.getInt("isbn");
+                String i = rs.getString("isbn");
                 int m = rs.getInt("mid");
                 int r = rs.getInt("rating");
                 String c = rs.getString("comments");
