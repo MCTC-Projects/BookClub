@@ -24,6 +24,7 @@ public class Book {
         title = t;
         author = a;
     }
+    public Book(){};
     public Book(String ISBN) {
         setISBN(ISBN);
     }
