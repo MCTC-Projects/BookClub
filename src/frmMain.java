@@ -44,7 +44,7 @@ public class frmMain {
 
 
     //Create test book object
-    private Book b = new Book("The Hobbit", "Tolkien");
+    //private Book b = new Book("The Hobbit", "Tolkien");
     private Book assignedReading;
 
     //Create test meeting object
@@ -59,10 +59,10 @@ public class frmMain {
 
     public frmMain() {
         //Meeting.setAssignedReading(b);
-        assignedReading = b;
+        //assignedReading = b;
         nextMeeting = m;
 //open database connection
-        DB.Connect();
+        //DB.Connect();
 
         if (assignedReading != null) {
             lboBookSuggestions.setEnabled(true);
@@ -138,6 +138,12 @@ public class frmMain {
                 }
             }
         });
+        btnEmailMembers.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     private void UpdateBookSuggestionsTab() {
@@ -193,6 +199,22 @@ public class frmMain {
         CenterOnScreen(setMeetingDialog);
 
         setMeetingDialog.setVisible(true);
+    }
+
+    private void openEmailDialog() {
+        //TODO: change addBookDialog and dlgAddBook to emailDialog and dlgEmail
+        //Initialize and open add book dialog
+//        addBookDialog = new dlgAddBook();
+//        addBookDialog.setTitle("Add Book");
+//
+//        //Set dimensions
+//        Dimension dimensions = new Dimension(300, 175);
+//        addBookDialog.setSize(dimensions);
+//        addBookDialog.setResizable(false);
+//
+//        CenterOnScreen(addBookDialog);
+//
+//        addBookDialog.setVisible(true);
     }
 
     private void openAddBookDialog() {
@@ -311,6 +333,7 @@ public class frmMain {
         response.searchForBooks();
         bookSuggestions = response.getSuggestedBooks();
     }
+
 
     public static boolean WindowClosed(Window window) {
         //TODO
