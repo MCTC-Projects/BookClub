@@ -57,7 +57,7 @@ public class dlgAddBook extends JDialog {
     }
 
     private boolean isValidInput() {
-        if (Validator.isPresent(txtISBN, "ISBN", true)) {
+        if (Validator.isPresent(txtISBN, "ISBN", false)) {
             if (ISBN_Validator.ValidateISBN(txtISBN.getText())) {
                 return true;
             } else {
