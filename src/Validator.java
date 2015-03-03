@@ -118,11 +118,11 @@ public class Validator {
         return parsedDate;
     }
 
-    public static boolean isValidEmail(JTextField textField, String name, boolean displaysError) {
+    public static boolean isValidGmailAddress(JTextField textField, String name, boolean displaysError) {
         String error = "Invalid email address syntax!";
 
         String s = textField.getText();
-        String[] parts = s.split("@", 1);
+        String[] parts = s.split("@", 2);
 
         if (parts.length != 2) {
             messageBox(error, "Invalid Email");
@@ -132,25 +132,12 @@ public class Validator {
 
         String domainPart = parts[1];
 
-        if (!domainPart.contains(".")) {
-            messageBox(error, "Invalid Email");
+        if (!domainPart.equalsIgnoreCase("gmail.com")) {
+            messageBox(error + "\n Please use a Gmail address.", "Invalid Email");
             textField.grabFocus();
             return false;
-        } else {
-            int dotFirstIndex = domainPart.indexOf('.');
-            int dotLastIndex = domainPart.lastIndexOf('.');
-
-            if (
-                    dotFirstIndex != dotLastIndex ||            //domain can't have more than one dot
-                    dotFirstIndex == 0 ||                       //dot can't be first character in domain
-                    dotLastIndex == domainPart.length() - 1     //dot can't be last character in domain
-                    ){
-                messageBox(error, "Invalid Email");
-                textField.grabFocus();
-                return false;
-            }
-            return true;
         }
+        return true;
     }
 
     public static void messageBox(String message, String title)
