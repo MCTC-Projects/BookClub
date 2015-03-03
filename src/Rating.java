@@ -8,6 +8,8 @@ public class Rating {
     private int rating;
     private String isbn;
     private int mid;
+    private Book book;
+    private Member member;
 
     public Rating(String i, int m, int r, String c)
     {
@@ -16,6 +18,13 @@ public class Rating {
         rating = r;
         comments = c;
     }
+    public Rating(Book b, Member m, int r, String c){
+        member = m;
+        book = b;
+
+        rating = r;
+        comments = c;
+    };
 
     public String getBook() {
         return isbn;
