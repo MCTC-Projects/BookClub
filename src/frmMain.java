@@ -44,9 +44,8 @@ public class frmMain {
 
 
     //Create test book object
-    private Book b = new Book("fkaosdin", "asdf;lien");
+    private Book b = new Book("The Hobbit", "Tolkien");
     private Book assignedReading;
-    private Book suggestionsBook;
 
     //Create test meeting object
     private Date meetingDate = new Date();
@@ -54,17 +53,16 @@ public class frmMain {
     private Meeting nextMeeting;
 
     //ArrayList of suggested books
-    public static ArrayList bookSuggestions = new ArrayList();
+    private static ArrayList bookSuggestions = new ArrayList();
 
     public frmMain() {
         //Meeting.setAssignedReading(b);
         assignedReading = b;
         nextMeeting = m;
-        suggestionsBook = b;
 
         if (assignedReading != null) {
             lboBookSuggestions.setEnabled(true);
-            PopulateBookSuggestions(suggestionsBook.getTitle(), suggestionsBook.getAuthor());
+            PopulateBookSuggestions(assignedReading.getTitle(), assignedReading.getAuthor());
         } else {
             lboBookSuggestions.setEnabled(false);
             bookSuggestions.clear();
@@ -222,6 +220,8 @@ public class frmMain {
         CenterOnScreen(getSuggestionsDialog);
 
         getSuggestionsDialog.setVisible(true);
+
+        //TODO: call UpdateBookSuggestionsTab() upon closing dialog
     }
 
     public static void main(String[] args) {
@@ -266,11 +266,10 @@ public class frmMain {
         window.setLocation(screenCenterX - windowCenterX, screenCenterY - windowCenterY);
     }
 
-    private void PopulateBookSuggestions(String bookTitle, String authorName) {
+    public static void PopulateBookSuggestions(String bookTitle, String authorName) {
         GoodReadsResponse response = new GoodReadsResponse(bookTitle, authorName);
         response.populateFromAPI();
         response.searchForBooks();
         bookSuggestions = response.getSuggestedBooks();
     }
-
 }
