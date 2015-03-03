@@ -24,6 +24,9 @@ public class GoodReadsBook {
     Integer numReviews;
     Integer numRatings;
 
+
+    GoodReadsBook(Book b) {this.bk = b;}
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -81,7 +84,6 @@ public class GoodReadsBook {
         this.description = description;
     }
 
-    GoodReadsBook(Book b) {this.bk = b;}
 
     public void setImageUrl(String u){this.imageUrl=u;}
     public void setNumPages(int nPages){this.numPages = nPages;}
