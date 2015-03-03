@@ -44,7 +44,7 @@ public class frmMain {
 
 
     //Create test book object
-    //private Book b = new Book("The Hobbit", "Tolkien");
+    private Book b = new Book("The Hobbit", "Tolkien");
     private Book assignedReading;
 
     //Create test meeting object
@@ -59,7 +59,7 @@ public class frmMain {
 
     public frmMain() {
         //Meeting.setAssignedReading(b);
-        //assignedReading = b;
+        assignedReading = b;
         nextMeeting = m;
 //open database connection
         //DB.Connect();
