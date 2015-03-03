@@ -44,7 +44,7 @@ public class frmMain {
 
 
     //Create test book object
-    private Book b = new Book("The Hobbit", "Tolkien");
+    private Book b = new Book("fkaosdin", "asdf;lien");
     private Book assignedReading;
     private Book suggestionsBook;
 
