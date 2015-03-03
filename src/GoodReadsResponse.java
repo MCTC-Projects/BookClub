@@ -27,19 +27,19 @@ public class GoodReadsResponse {
     }
 
     public GoodReadsResponse(String title,String author){
-        Book b = new Book(title, author);
-        this.bk=new GoodReadsBook(b);
+        this.bk=new GoodReadsBook(title,author);
         this.SuggestedBooks = new ArrayList<GoodReadsBook>();}
 
     public void populateFromAPI(){
+            URL url;
         try {
-            if(this.bk.bk.getISBN()==null) {
+            if(this.bk.getISBN()==null) {
 
                 URL firstUrl = new URL("http://www.goodreads.com/book/title.xml");
-                URL url = new URL(firstUrl.toString() + "?key=J3GUE84DV610O7QQhEp5Jw&title=" + this.bk.bk.getTitle().replace(' ', '+') + "&author=" + this.bk.bk.getAuthor().replace(' ', '+'));
+                url = new URL(firstUrl.toString() + "?key=J3GUE84DV610O7QQhEp5Jw&title=" + this.bk.getTitle().replace(' ', '+') + "&author=" + this.bk.getAuthor().replace(' ', '+'));
             }else{
                 URL firstUrl = new URL("http://www.goodreads.com/book/title.xml");
-                URL url = new URL(firstUrl.toString() + "?key=J3GUE84DV610O7QQhEp5Jw&isbn=" + this.bk.bk.getISBN());
+                url = new URL(firstUrl.toString() + "?key=J3GUE84DV610O7QQhEp5Jw&isbn=" + this.bk.getISBN());
             }
 
                 HttpURLConnection httpCon = (HttpURLConnection)url.openConnection();
@@ -71,7 +71,7 @@ public class GoodReadsResponse {
                 NodeList isbnNodes = doc.getElementsByTagName("isbn");
                 NodeList ratingNodes = doc.getElementsByTagName("average_rating");
                 this.bk.setDescription(descNodes.item(0).getTextContent().replaceAll("[<][/a-z]{1,20}[>]", ""));
-                this.bk.bk.setISBN(isbnNodes.item(0).getTextContent());
+                this.bk.setISBN(isbnNodes.item(0).getTextContent());
                 this.bk.AveRating = Double.parseDouble(ratingNodes.item(0).getTextContent());
                 this.bk.setId(Integer.parseInt(idNodes.item(0).getTextContent()));
             }else{
@@ -125,7 +125,7 @@ public class GoodReadsResponse {
                 NodeList SimilarBookNodes = doc.getElementsByTagName("book");
                 for(int i=1;i<SimilarBookNodes.getLength();i++){
                     Book bk = new Book(SimilarBookNodes.item(i).getChildNodes().item(1).getTextContent(),SimilarBookNodes.item(i).getChildNodes().item(8).getTextContent().split("    ")[2]);
-                    GoodReadsBook newbook = new GoodReadsBook(bk);
+                    GoodReadsBook newbook = new GoodReadsBook(bk.getTitle(),bk.getAuthor());
 
                     newbook.setAveRating(Double.parseDouble(SimilarBookNodes.item(i).getChildNodes().item(6).getTextContent()));
                     newbook.setImageUrl(SimilarBookNodes.item(i).getChildNodes().item(5).getTextContent());
