@@ -9,6 +9,8 @@ public class Book {
     private String title,author,isbn;
     private Rating rating;
 
+
+
     public Book(String t, String a)
     {
         title = t;
