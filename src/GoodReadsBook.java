@@ -85,4 +85,9 @@ public class GoodReadsBook {
 
     public void setImageUrl(String u){this.imageUrl=u;}
     public void setNumPages(int nPages){this.numPages = nPages;}
+
+    @Override
+    public String toString() {
+        return this.bk.getTitle() + "; " + this.bk.getAuthor();
+    }
 }

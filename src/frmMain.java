@@ -44,7 +44,7 @@ public class frmMain {
 
 
     //Create test book object
-    private Book b = new Book("The Hobbit", "Tolkein");
+    private Book b = new Book("The Hobbit", "Tolkien");
     private Book assignedReading;
     private Book suggestionsBook;
 
@@ -58,7 +58,7 @@ public class frmMain {
 
     public frmMain() {
         //Meeting.setAssignedReading(b);
-        //assignedReading = b;
+        assignedReading = b;
         nextMeeting = m;
 
 
@@ -66,8 +66,13 @@ public class frmMain {
             suggestionsBook = assignedReading;
             lboBookSuggestions.setEnabled(true);
             //TODO: populate suggestedBooks with book suggestions from api
+            GoodReadsResponse response = new GoodReadsResponse(suggestionsBook.getTitle(), suggestionsBook.getAuthor());
+            response.populateFromAPI();
+            response.searchForBooks();
+            bookSuggestions = response.getSuggestedBooks();
         } else {
             lboBookSuggestions.setEnabled(false);
+            bookSuggestions.clear();
             bookSuggestions.add("No book to base suggestions off of, please click \"Get Suggestions\"");
         }
 
