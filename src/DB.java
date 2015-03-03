@@ -5,6 +5,7 @@
  */
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DB {
     public Connection c = null;
@@ -12,7 +13,7 @@ public class DB {
     public Statement statement = null;
 
 
-     void Connect() {
+    public void Connect() {
 
 
         try {
@@ -28,7 +29,7 @@ public class DB {
         try {
             statement = c.createStatement();
             statement.setQueryTimeout(30); // 30 seconds
-            rs = statement.executeQuery("select * from books;");
+            rs = statement.executeQuery("select * from books2;");
 
             // Read the results
             while (rs.next()) {
@@ -49,27 +50,26 @@ public class DB {
 
 
     //adds a book to the database
-        void addBook(Book b) {
-            try {
+    void addBook(Book b) {
+        try {
 
-                //start statement
-                c.setAutoCommit(false);
-                Statement stmt = c.createStatement();
-                //sql statement
-                String sql = "INSERT INTO books (isbn,title,author) " +
-                        "VALUES (" + b.getISBN() + ", " + b.getTitle() + "," + b.getAuthor() + ");";
-                stmt.executeUpdate(sql);
+            //start statement
+            c.setAutoCommit(false);
+            Statement stmt = c.createStatement();
+            //sql statement
+            String sql = "INSERT INTO books2 (isbn,title,author) " +
+                    "VALUES (" + b.getISBN() + ", " + b.getTitle() + "," + b.getAuthor() + ");";
+            stmt.executeUpdate(sql);
 
-            } catch (Exception e) {
-                System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                System.exit(0);
-            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
         }
-
+    }
 
 
     //adds a book from the database
-    public Book getBook(long isbn) {
+    public Book getBook(int isbn) {
         Book b = null;
         try {
 
@@ -77,14 +77,14 @@ public class DB {
             c.setAutoCommit(false);
             Statement stmt = c.createStatement();
             //sql statement
-            String sql = "select * from books where isbn = " + isbn + ";";
+            String sql = "select * from books2 where isbn = " + isbn + ";";
             ResultSet rs = stmt.executeQuery(sql);
 
-            long i = rs.getLong("isbn");
+            String i = rs.getString("isbn");
             String t = rs.getString("title");
             String a = rs.getString("author");
 
-            b = new Book("" + i);
+            b = new Book(i, t, a);
 
 
         } catch (Exception e) {
@@ -92,6 +92,32 @@ public class DB {
             System.exit(0);
         }
         return b;
+    }
+
+    public ArrayList<Book> getAllBooks() {
+        ArrayList<Book> books = null;
+
+        try {
+            //start statement
+            c.setAutoCommit(false);
+            Statement stmt = c.createStatement();
+            //sql statement
+            String sql = "select * from books2;";
+            ResultSet rs = stmt.executeQuery(sql);
+            //pull books into arraylist
+            while (rs.next()) {
+                String i = rs.getString("isbn");
+                String t = rs.getString("title");
+                String a = rs.getString("author");
+                Book b = new Book(i, t, a);
+                books.add(b);
+            }
+
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return books;
     }
 
 
@@ -113,7 +139,6 @@ public class DB {
         }
     }
 
-    //todo: get a member set up return
 
 
     //adds a member to the database
@@ -125,14 +150,14 @@ public class DB {
             c.setAutoCommit(false);
             Statement stmt = c.createStatement();
             //sql statement
-            String sql = "select * from members where mid = "+mid+";";
+            String sql = "select * from members where mid = " + mid + ";";
             ResultSet rs = stmt.executeQuery(sql);
 
-            int m= rs.getInt("mid");
+            int m = rs.getInt("mid");
             String n = rs.getString("name");
             String e = rs.getString("email");
 
-            mem =  new Member(m,n,e);
+            mem = new Member(m, n, e);
 
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -144,9 +169,35 @@ public class DB {
 
     //todo: delete a member
 
+    public ArrayList<Member> getAllMembers() {
+        ArrayList<Member> members = null;
 
+        try {
+            //start statement
+            c.setAutoCommit(false);
+            Statement stmt = c.createStatement();
+            //sql statement
+            String sql = "select * from members;";
+            ResultSet rs = stmt.executeQuery(sql);
+            //pull members into arraylist
+            while (rs.next()) {
+                int m = rs.getInt("mid");
+                String n = rs.getString("name");
+                String e = rs.getString("email");
 
+                Member mem = new Member(m, n, e);
+                members.add(mem);
 
+            }
+
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return members;
+    }
+
+    //todo remove member
 
     //adds a ratting to the database
     void addRating(Rating r) {
@@ -157,7 +208,7 @@ public class DB {
             Statement stmt = c.createStatement();
             //sql statement
             String sql = "INSERT INTO ratings (mid, isbn, rating, comments) " +
-                    "VALUES ("+ r.getMember().getMid() +", " + r.getBook().getISBN() + ", " + r.getRating() + "," + r.getComments() + ");";
+                    "VALUES (" + r.getMid() + ", " + r.getISBN() + ", " + r.getRating() + "," + r.getComments() + ");";
             stmt.executeUpdate(sql);
 
         } catch (Exception e) {
@@ -169,7 +220,7 @@ public class DB {
     }
 
     // get a ranking
-    public Rating getRating(int isbn) {
+    public Rating getRating(String isbn, int mid) {
         Rating rating = null;
         try {
 
@@ -177,20 +228,104 @@ public class DB {
             c.setAutoCommit(false);
             Statement stmt = c.createStatement();
             //sql statement
-            String sql = "select * from ratings where isbn = "+isbn+";";
+            String sql = "select * from ratings where isbn = " + isbn + " AND mid = "+mid+";";
             ResultSet rs = stmt.executeQuery(sql);
 
-            int i = rs.getInt("isbn");
-            int m= rs.getInt("mid");
+            String i = rs.getString("isbn");
+            int m = rs.getInt("mid");
             int r = rs.getInt("rating");
             String c = rs.getString("comments");
 
-            //rating =  new Rating(new Book(""+i),new Member(m),r,c);
+            rating = new Rating(i, m, r, c);
 
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return rating;
+    }
+
+    public ArrayList<Rating> getRatingsForBook(int isbn) {
+        ArrayList<Rating> ratings = null;
+        try {
+
+            //start statement
+            c.setAutoCommit(false);
+            Statement stmt = c.createStatement();
+            //sql statement
+            String sql = "select * from ratings where isbn = " + isbn + ";";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int i = rs.getInt("isbn");
+                int m = rs.getInt("mid");
+                int r = rs.getInt("rating");
+                String c = rs.getString("comments");
+
+                Rating rating = new Rating(i, m, r, c);
+                ratings.add(rating);
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return ratings;
+    }
+
+
+    public ArrayList<Rating> getRatingsForMember(int mid) {
+        ArrayList<Rating> ratings = null;
+        try {
+
+            //start statement
+            c.setAutoCommit(false);
+            Statement stmt = c.createStatement();
+            //sql statement
+            String sql = "select * from ratings where mid = " + mid + ";";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int i = rs.getInt("isbn");
+                int m = rs.getInt("mid");
+                int r = rs.getInt("rating");
+                String c = rs.getString("comments");
+
+                Rating rating = new Rating(i, m, r, c);
+                ratings.add(rating);
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return ratings;
+    }
+
+
+
+    public ArrayList<Rating> getAllRatings() {
+        ArrayList<Rating> ratings = null;
+
+        try {
+            //start statement
+            c.setAutoCommit(false);
+            Statement stmt = c.createStatement();
+            //sql statement
+            String sql = "select * from ratings;";
+            ResultSet rs = stmt.executeQuery(sql);
+            //pull members into arraylist
+            while (rs.next()) {
+                int i = rs.getInt("isbn");
+                int m = rs.getInt("mid");
+                int r = rs.getInt("rating");
+                String c = rs.getString("comments");
+
+                Rating rating = new Rating(i, m, r, c);
+                ratings.add(rating);
+
+            }
+
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return ratings;
     }
 }
