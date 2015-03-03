@@ -87,18 +87,19 @@ public class frmMain {
                 openSetMeetingDialog();
             }
         });
-        DefaultListModel dlm = new DefaultListModel();
-        booksfromdb = DB.getAllBooks();
-        int l = booksfromdb.size();
-        int c = 0;
-        String[] books = new String[l];
-        while (c< l){
-            Book b = booksfromdb.get(c);
-            dlm.addElement(b.getTitle());
+     //   lboPastBooks = new JList();
+       // DefaultListModel dlm = new DefaultListModel();
+       // booksfromdb = DB.getAllBooks();
+       // int l = booksfromdb.size();
+       // int c = 0;
+       // String[] books = new String[l];
+       // while (c< l){
+         //   Book b = booksfromdb.get(c);
+         //   dlm.addElement(b.getTitle());
 
-        }
+       // }
 
-        lboPastBooks.setModel(dlm);
+     //   lboPastBooks.setModel(dlm);
 
 
         //Add Book
