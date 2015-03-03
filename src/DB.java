@@ -184,6 +184,7 @@ public class DB {
             ResultSet rs = stmt.executeQuery(sql);
             //pull members into arraylist
             while (rs.next()) {
+
                 int m = rs.getInt("mid");
                 String n = rs.getString("name");
                 String e = rs.getString("email");
@@ -233,8 +234,8 @@ public class DB {
             //sql statement
             String sql = "select * from ratings where isbn = " + isbn + " AND mid = "+mid+";";
             ResultSet rs = stmt.executeQuery(sql);
-
-            String i = rs.getString("isbn");
+            long l = rs.getLong("isbn");
+            String i = Long.toString(l);
             int m = rs.getInt("mid");
             int r = rs.getInt("rating");
             String c = rs.getString("comments");
@@ -259,7 +260,8 @@ public class DB {
             String sql = "select * from ratings where isbn = " + isbn + ";";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                String i = rs.getString("isbn");
+                long l = rs.getLong("isbn");
+                String i = Long.toString(l);
                 int m = rs.getInt("mid");
                 int r = rs.getInt("rating");
                 String c = rs.getString("comments");
@@ -286,7 +288,8 @@ public class DB {
             String sql = "select * from ratings where mid = " + mid + ";";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                String i = rs.getString("isbn");
+                long l = rs.getLong("isbn");
+                String i = Long.toString(l);
                 int m = rs.getInt("mid");
                 int r = rs.getInt("rating");
                 String c = rs.getString("comments");
@@ -315,7 +318,8 @@ public class DB {
             ResultSet rs = stmt.executeQuery(sql);
             //pull members into arraylist
             while (rs.next()) {
-                String i = rs.getString("isbn");
+                long l = rs.getLong("isbn");
+                String i = Long.toString(l);
                 int m = rs.getInt("mid");
                 int r = rs.getInt("rating");
                 String c = rs.getString("comments");
