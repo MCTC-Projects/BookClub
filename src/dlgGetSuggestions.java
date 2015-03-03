@@ -8,6 +8,13 @@ public class dlgGetSuggestions extends JDialog {
     private JTextField txtTitle;
     private JTextField txtAuthor;
 
+
+
+    public String[] getTitleAndAuthor(){
+        String[] authorAndTitle = {this.txtTitle.getText(),this.txtAuthor.getText()};
+        return authorAndTitle;
+    }
+
     public dlgGetSuggestions() {
         setContentPane(contentPane);
         setModal(true);

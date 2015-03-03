@@ -78,11 +78,13 @@ public class GoodReadsResponse {
                 System.out.println(httpCon.getResponseMessage().toString());
             }
         }catch(MalformedURLException mue){
+            Validator.messageBox(mue.toString(),"Sorry, try again.");
 
         }catch(IOException ioe){
-            System.out.println(ioe.toString());
+
+            Validator.messageBox(ioe.toString(), "Error:");
         }catch(Exception e){
-            System.out.println(e.toString());
+            System.out.println("Is this the one.");;
 
         }
 
@@ -138,9 +140,11 @@ public class GoodReadsResponse {
         }catch(MalformedURLException mue){
 
         }catch(IOException ioe){
-            System.out.println(ioe.toString());
+            System.out.println("IO Exception");
+            Validator.messageBox(ioe.toString(), "Sorry there was an error.");
         }catch(Exception e){
-            System.out.println(e.toString());
+            System.out.println("Exception");
+            Validator.messageBox(e.toString(), "Error");
 
         }
     }
