@@ -1,6 +1,7 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -9,19 +10,24 @@ import java.util.Date;
 public class Meeting {
     private Date DateTime;
     private String Location;
-    private static Book AssignedReading;
+    private Book assignedReading;
+
+    private static Meeting nextMeeting;
+
+    public static final String FRIENDLY_DATE_FORMAT = "MMMM dd, yyyy HH:mm a";
+    public static final String LONG_FRIENDLY_DATE_FORMAT = "EEEE, MMMM dd, yyyy 'at' HH:mm a";
+    public static final String DETAILED_DATE_FORMAT = "EEE MMM dd HH:mm:ss zzz yyyy";
+    public static final String SHORT_DATE_FORMAT = "MM/dd/yyyy";
 
     public Meeting(Date dateTime, String location) {
         this.DateTime = dateTime;
         this.Location = location;
-        this.UpdateMeetingInfo();
     }
 
     public Meeting(Date dateTime, String location, Book book) {
         this.DateTime = dateTime;
         this.Location = location;
-        this.AssignedReading = book;
-        this.UpdateMeetingInfo();
+        this.assignedReading = book;
     }
 
     public Date getDateTime() {
@@ -30,7 +36,6 @@ public class Meeting {
 
     public void setDateTime(Date newDateTime) {
         this.DateTime = newDateTime;
-        this.UpdateMeetingInfo();
     }
 
     public String getLocation() {
@@ -39,37 +44,65 @@ public class Meeting {
 
     public void setLocation(String newLocation) {
         this.Location = newLocation;
-        this.UpdateMeetingInfo();
     }
 
     public Book getAssignedReading() {
-        return this.AssignedReading;
+        return this.assignedReading;
     }
 
-    public static void setAssignedReading(Book book) {
-        AssignedReading = book;
-        UpdateMeetingInfo();
+    public void setAssignedReading(Book book) {
+        this.assignedReading = book;
+        UpdateNextMeetingInfo();
     }
 
-    public static void UpdateMeetingInfo() {
+    public static Meeting getNextMeeting() {
+        return nextMeeting;
+    }
+
+    public static void setNextMeeting(Meeting meeting) {
+        nextMeeting = meeting;
+        UpdateNextMeetingInfo();
+    }
+
+    public static void UpdateNextMeetingInfo() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("NextMeetingInfo.txt"));
 
-            writer.write(this.DateTime.toString());
+            DateFormat df = new SimpleDateFormat(DETAILED_DATE_FORMAT);
+
+            writer.write(df.format(nextMeeting.getDateTime()));
             writer.newLine();
-            writer.write(this.Location);
-            if (this.AssignedReading != null) {
-                writer.newLine();
-                writer.write(
-                        this.AssignedReading.getISBN() + ";" +
-                        this.AssignedReading.getTitle() + ";" +
-                        this.AssignedReading.getAuthor());
-            }
+            writer.write(nextMeeting.getLocation());
             writer.close();
         } catch (IOException ioe) {
-            Validator.messageBox("Error writing to \"NextMeetingInfo.txt\"", "Error");
-            System.out.println("Error writing to \"NextMeetingInfo.txt\"");
-            System.out.println((ioe));
+            Validator.messageBox("Problem writing to \"NextMeetingInfo.txt\"\n" + ioe, "Error");
+        }
+    }
+
+    public static Meeting GetNextMeetingInfo() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("NextMeetingInfo.txt"));
+
+            String[] lines = new String[3];
+            String line = reader.readLine();
+            int i = 0;
+            while (line != null) {
+                lines[i] = line;
+                i++;
+                line = reader.readLine();
+            }
+
+            String dateString = lines[0];
+            Date date = Validator.ParseDate(dateString, DETAILED_DATE_FORMAT);
+
+            String location = lines[1];
+
+            Meeting m = new Meeting(date, location);
+
+            return m;
+        } catch (IOException ioe) {
+            Validator.messageBox("Problem reading from \"NextMeetingInfo.txt\"\n" + ioe, "Error");
+            return null;
         }
     }
 }

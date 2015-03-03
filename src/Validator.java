@@ -93,7 +93,7 @@ public class Validator {
     }
 
     public static boolean dateIsWithinRange(Date date, String name, Date min, Date max) {
-        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat df = new SimpleDateFormat(Meeting.SHORT_DATE_FORMAT);
         if (date.before(min) || date.after(max)) {
 
             messageBox(name + " must be a date between "
@@ -112,7 +112,7 @@ public class Validator {
         try {
             parsedDate = df.parse(date);
         } catch (ParseException pe) {
-            messageBox("Error processing date/time data\n" + pe, "Error");
+            messageBox("Problem processing date/time data\n" + pe, "Error");
             return null;
         }
         return parsedDate;
