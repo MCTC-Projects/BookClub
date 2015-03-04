@@ -5,8 +5,6 @@ public class dlgEmail extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JLabel lblSenderEmail;
-    private JLabel lblSenderPassword;
     private JLabel lblSubject;
     private JLabel lblMessage;
     private JTextField txtSenderEmail;

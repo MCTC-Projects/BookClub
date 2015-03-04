@@ -33,7 +33,7 @@ public class frmMain {
     private JButton btnEditMember;
     private JPanel pnlNoBook;
     private JPanel pnlNoMeeting;
-    private static JList lboBookSuggestions;
+    private JList lboBookSuggestions;
     private JPanel tabBookSuggestions;
     private JList lboPastBooks;
     private JButton btnReviewPastBook;
@@ -144,7 +144,7 @@ public class frmMain {
         });
     }
 
-    public static void UpdateBookSuggestionsTab() {
+    public void UpdateBookSuggestionsTab() {
         DefaultListModel listModel = new DefaultListModel();
 
         for (Object o : bookSuggestions) {
