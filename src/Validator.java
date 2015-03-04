@@ -118,11 +118,16 @@ public class Validator {
         return parsedDate;
     }
 
+    public static String getDateString(Date date, String dateFormatString) {
+        SimpleDateFormat df  = new SimpleDateFormat(dateFormatString);
+        return df.format(date);
+    }
+
     public static boolean isValidGmailAddress(JTextField textField, String name, boolean displaysError) {
-        String error = "Invalid email address syntax!";
+        String error = "Invalid email address";
 
         String s = textField.getText();
-        String[] parts = s.split("@", 2);
+        String[] parts = s.split("@");
 
         if (parts.length != 2) {
             messageBox(error, "Invalid Email");

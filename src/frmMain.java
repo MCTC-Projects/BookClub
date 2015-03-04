@@ -33,7 +33,7 @@ public class frmMain {
     private JButton btnEditMember;
     private JPanel pnlNoBook;
     private JPanel pnlNoMeeting;
-    private JList lboBookSuggestions;
+    private static JList lboBookSuggestions;
     private JPanel tabBookSuggestions;
     private JList lboPastBooks;
     private JButton btnReviewPastBook;
@@ -42,9 +42,8 @@ public class frmMain {
     private JPanel pnlBookInfo;
     private JButton btnGetSuggestions;
 
-
     //Create test book object
-    private Book b = new Book("The Hobbit", "Tolkien");
+    //private Book b = new Book("The Hobbit", "Tolkien");
     private Book assignedReading;
 
     //Create test meeting object
@@ -55,11 +54,10 @@ public class frmMain {
     //ArrayList of suggested books
     private static ArrayList bookSuggestions = new ArrayList();
 
-
-
     public frmMain() {
         //Meeting.setAssignedReading(b);
-        assignedReading = b;
+        Book.GetCurrentBookInfo();
+        assignedReading = Book.getCurrentBook();
         nextMeeting = m;
 //open database connection
         //DB.Connect();
@@ -146,7 +144,7 @@ public class frmMain {
         });
     }
 
-    private void UpdateBookSuggestionsTab() {
+    public static void UpdateBookSuggestionsTab() {
         DefaultListModel listModel = new DefaultListModel();
 
         for (Object o : bookSuggestions) {
@@ -269,14 +267,14 @@ public class frmMain {
     private void openShowBooksForm(GoodReadsBook book) {
         //Initialize form
         JFrame frame = new JFrame("frmShowBooks");
-        frmShowBooks showbooksform = new frmShowBooks();
-        frame.setContentPane(showbooksform.getPanel1());
+        frmShowBooks showBooksForm = new frmShowBooks();
+        frame.setContentPane(showBooksForm.getPanel1());
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setTitle(book.getTitle());    //Form title
-        showbooksform.populateDescription(book);
-        showbooksform.setAuthorTxtField(book.getAuthor());
-        showbooksform.setTitleTxtField(book.getTitle());
+        showBooksForm.populateDescription(book);
+        showBooksForm.setAuthorTxtField(book.getAuthor());
+        showBooksForm.setTitleTxtField(book.getTitle());
         //Set dimension properties
         Dimension dimensions = new Dimension(600, 400);
         frame.setSize(dimensions);

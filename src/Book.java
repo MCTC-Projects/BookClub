@@ -57,6 +57,9 @@ public class Book {
     public Rating getRating() { return rating; }
     public void setRating(Rating r) { this.rating = r; }
 
+    public static void setCurrentBook(Book book) { currentBook = book; }
+    public static Book getCurrentBook() { return currentBook; }
+
     public static void UpdateCurrentBookInfo() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("AssignedReadingInfo.txt"));
@@ -83,9 +86,9 @@ public class Book {
         }
     }
 
-    public static Book GetCurrentBookInfo() {
+    public static void GetCurrentBookInfo() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("AssignedReadingInfo.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("CurrentBookInfo.txt"));
 
             String data = reader.readLine();
 
@@ -106,12 +109,10 @@ public class Book {
                 } else {
                     b = new Book(bookData[0],bookData[1], bookData[2]);
                 }
-                return b;
+                currentBook = b;
             }
-            return null;
         } catch (IOException ioe) {
             Validator.messageBox("Problem reading from \"AssignedReadingInfo.txt\"\n" + ioe, "Error");
-            return null;
         }
     }
 

@@ -15,6 +15,8 @@ public class frmLogin {
     public static String USER_EMAIL;
     public static String USER_PASSWORD;
 
+    private static Window loginWindow;
+
     public frmLogin() {
         btnLogin.addActionListener(new ActionListener() {
             @Override
@@ -39,6 +41,8 @@ public class frmLogin {
 
                     //Show form
                     frame.setVisible(true);
+
+                    loginWindow.dispose();
                 }
             }
         });
@@ -52,32 +56,24 @@ public class frmLogin {
     }
 
     public static void main(String[] args) {
-        //TODO: initialize form
         JFrame frame = new JFrame("frmLogin");
         frame.setContentPane(new frmLogin().panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
 
+        loginWindow = frame;
+
         frame.setTitle("Login");    //Form title
 
         //Set dimension properties
-        Dimension dimensions = new Dimension(230, 115);
+        Dimension dimensions = new Dimension(300, 150);
         frame.setSize(dimensions);
         frame.setMinimumSize(dimensions);
 
-        //Center form on screen
-        Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();   //Get screen size
-
-        //Screen's center point
-        int screenCenterX = screenDimensions.width / 2;
-        int screenCenterY = screenDimensions.height / 2;
-
-        //Form's center point
-        int frameCenterX = frame.getSize().width / 2;
-        int frameCenterY = frame.getSize().height / 2;
-
-        frame.setLocation(screenCenterX - frameCenterX, screenCenterY - frameCenterY);
+        frmMain.CenterOnScreen(frame);
 
         frame.setVisible(true);
+
+        //frame.dispose();
     }
 }
