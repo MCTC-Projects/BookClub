@@ -17,16 +17,22 @@ public class Book {
         isbn = i;
         title = t;
         author = a;
+        //TODO: check that isbn and title+author match up? maybe?? idk.
     }
     public Book( String t, String a)
     {
-
         title = t;
         author = a;
+        //TODO: get isbn by title and author
     }
-    public Book(){};
+    public Book(){}         //This constructor keeps popping up for some reason,
+                            // I think it has something to do with GoodReadsBook
+                            // See: Right-click > Find Usages
+                            // I guess it can stay tho, no harm
+
     public Book(String ISBN) {
         setISBN(ISBN);
+        //TODO: get title and author by ISBN
     }
 
     public String getISBN() {
@@ -116,8 +122,20 @@ public class Book {
         }
     }
 
+    public static void UpdateBookData() {
+        //TODO: Send pastBooks ArrayList to DB
+        //Call this each time pastBooks ArrayList is updated
+    }
+
+    public static void GetLatestBookData() {
+        //TODO: Populate pastBooks ArrayList from DB
+        //Call this at application start (in frmMain)
+    }
+
     @Override
     public String toString() {
         return this.getTitle() + "; " + this.getAuthor();
     }
+
+    //TODO: Add sorting capabilities?
 }

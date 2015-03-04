@@ -58,12 +58,12 @@ public class Member implements Comparable<Member> {
 
     public static void UpdateMemberData() {
         Collections.sort(AllMembers);
-        //TODO: Send members list to DB
-        //Call this each time members list is updated
+        //TODO: Send AllMembers ArrayList to DB
+        //Call this each time AllMembers ArrayList is updated
     }
 
     public static void GetLatestMemberData() {
-        //TODO: Populate members list from DB
+        //TODO: Populate AllMembers ArrayList from DB
         //Call this at application start (in frmMain)
         Collections.sort(AllMembers);
     }
