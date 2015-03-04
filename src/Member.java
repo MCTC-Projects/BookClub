@@ -1,21 +1,25 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Toby on 2/12/2015.
  *
  * makes member class
  */
-public class Member {
+public class Member implements Comparable<Member> {
     private String name, email;
     private int mid;
 
-    public static ArrayList<Member> AllMembers;
+    private static ArrayList<Member> AllMembers = new ArrayList<Member>();
 
     public Member(int m, String n, String e)
     {
         mid = m;
         name = n;
         email = e;
+
+        //
+        AddMember(this);
     }
 
     public int getMid() {
@@ -37,13 +41,34 @@ public class Member {
         this.email = newEmail;
     }
 
-    public void AddToMembers() {
-        AllMembers.add(this);
-        //TODO: Add to database
+    public static void AddMember(Member member) {
+        AllMembers.add(member);
+        UpdateMemberData();
     }
 
-    public void RemoveFromMember() {
-        AllMembers.remove(this);
-        //TODO: Remove from database
+    public static void RemoveMember(Member member) {
+        AllMembers.remove(member);
+        UpdateMemberData();
+    }
+
+    public static ArrayList<Member> getAllMembers() {
+        Collections.sort(AllMembers);
+        return AllMembers;
+    }
+
+    public static void UpdateMemberData() {
+        Collections.sort(AllMembers);
+        //TODO: Send members list to DB
+        //Call this each time members list is updated
+    }
+
+    public static void GetLatestMemberData() {
+        //TODO: Populate members list from DB
+        //Call this at application start (in frmMain)
+        Collections.sort(AllMembers);
+    }
+
+    public int compareTo(Member otherMember) {
+        return this.getName().compareTo(otherMember.getName());
     }
 }

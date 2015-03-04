@@ -69,7 +69,7 @@ public class Meeting {
         //Email info
         String senderEmail = frmLogin.USER_EMAIL;
         String senderPassword = frmLogin.USER_PASSWORD;
-        ArrayList<Member> recipients = Member.AllMembers;
+        ArrayList<Member> recipients = Member.getAllMembers();
         String subject = "Next Book Club Meeting";
 
         //message data

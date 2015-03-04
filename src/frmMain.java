@@ -100,6 +100,21 @@ public class frmMain {
         });
 
         /** MEMBERS TAB **/
+        UpdateMembersTab();
+        btnEmailMembers.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lboMembers.isSelectionEmpty()) {
+                    Validator.messageBox("Please select members to email.", "Select Members");
+                } else {
+                    ArrayList<Member> recipients = new ArrayList<Member>();
+                    for (int index : lboMembers.getSelectedIndices()) {
+                        recipients.add(Member.getAllMembers().get(index));
+                    }
+                    openEmailDialog(recipients);
+                }
+            }
+        });
 
         /** PAST BOOKS TAB **/
         btnReviewPastBook.addActionListener(new ActionListener() {
@@ -122,6 +137,7 @@ public class frmMain {
                 openGetSuggestionsDialog();
             }
         });
+
         btnViewBook.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -136,22 +152,6 @@ public class frmMain {
                 }
             }
         });
-        btnEmailMembers.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                openEmailDialog();
-            }
-        });
-    }
-
-    public void UpdateBookSuggestionsTab() {
-        DefaultListModel listModel = new DefaultListModel();
-
-        for (Object o : bookSuggestions) {
-            //TODO: get String data from book objects
-            listModel.addElement(o.toString());
-        }
-        lboBookSuggestions.setModel(listModel);
     }
 
     private void UpdateHomeTab() {
@@ -184,6 +184,25 @@ public class frmMain {
         }
     }
 
+    public void UpdateBookSuggestionsTab() {
+        DefaultListModel listModel = new DefaultListModel();
+
+        for (Object o : bookSuggestions) {
+            //TODO: get String data from book objects
+            listModel.addElement(o.toString());
+        }
+        lboBookSuggestions.setModel(listModel);
+    }
+
+    public void UpdateMembersTab() {
+        DefaultListModel listModel = new DefaultListModel();
+
+        for (Member m : Member.getAllMembers()) {
+            listModel.addElement(m.getName() + "; " + m.getEmail());
+        }
+        lboBookSuggestions.setModel(listModel);
+    }
+
     private void openSetMeetingDialog() {
         //Initialize and open set meeting dialog
         dlgSetMeeting setMeetingDialog = new dlgSetMeeting();
@@ -199,20 +218,20 @@ public class frmMain {
         setMeetingDialog.setVisible(true);
     }
 
-    private void openEmailDialog() {
-        //TODO: change addBookDialog and dlgAddBook to emailDialog and dlgEmail
+    private void openEmailDialog(ArrayList<Member> recipients) {
         //Initialize and open add book dialog
-        dlgEmail emaildialog = new dlgEmail();
-        emaildialog.setTitle("Send Email");
+        dlgEmail emailDialog = new dlgEmail();
+        emailDialog.setTitle("Send Email");
+        emailDialog.recipientList = recipients;
 
         //Set dimensions
         Dimension dimensions = new Dimension(400, 400);
-        emaildialog.setSize(dimensions);
-        emaildialog.setResizable(false);
+        emailDialog.setSize(dimensions);
+        emailDialog.setResizable(false);
 
-        CenterOnScreen(emaildialog);
+        CenterOnScreen(emailDialog);
 
-        emaildialog.setVisible(true);
+        emailDialog.setVisible(true);
     }
 
     private void openAddBookDialog() {
@@ -271,10 +290,12 @@ public class frmMain {
         frame.setContentPane(showBooksForm.getPanel1());
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
+
         frame.setTitle(book.getTitle());    //Form title
         showBooksForm.populateDescription(book);
         showBooksForm.setAuthorTxtField(book.getAuthor());
         showBooksForm.setTitleTxtField(book.getTitle());
+
         //Set dimension properties
         Dimension dimensions = new Dimension(600, 400);
         frame.setSize(dimensions);

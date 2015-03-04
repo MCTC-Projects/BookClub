@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class dlgEmail extends JDialog {
     private JPanel contentPane;
@@ -12,9 +13,9 @@ public class dlgEmail extends JDialog {
     private JTextField txtSubject;
     private JTextArea txtEmailMessage;
 
-    private String [] recipientList =  { "DrNowzik@gmail.com","RuxinWins@yahoo.com", "darylschmit@yahoo.com"};
+    //private String [] recipientList =  { "DrNowzik@gmail.com","RuxinWins@yahoo.com", "darylschmit@yahoo.com"};
 
-
+    public ArrayList<Member> recipientList = new ArrayList<Member>();
 
     public dlgEmail() {
         setContentPane(contentPane);
@@ -50,12 +51,12 @@ public class dlgEmail extends JDialog {
     }
 
     private void onOK() {
-        String sender = txtSenderEmail.getText();
-        String password = txtPassword.getText();
+        String sender = frmLogin.USER_EMAIL;
+        String password = frmLogin.USER_PASSWORD;
         String subject = txtSubject.getText();
         String message = txtEmailMessage.getText();
-        for (String r: recipientList){
-            Emailer.sendEmail(sender,password,r,subject,message);
+        for (Member r: recipientList){
+            Emailer.sendEmail(sender,password,r.getEmail(),subject,message);
         }
         dispose();
     }

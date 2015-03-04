@@ -22,6 +22,7 @@ public class frmLogin {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (isValidInput()) {
+                    //TODO: validate email and password
                     USER_EMAIL = txtEmail.getText();
                     USER_PASSWORD = txtPassword.getText();
 
