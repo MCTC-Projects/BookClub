@@ -122,6 +122,20 @@ public class Book {
         }
     }
 
+    public static void AddBook(Book book) {
+        pastBooks.add(book);
+        UpdateBookData();
+    }
+
+    public static void RemoveBook(Book book) {
+        pastBooks.remove(book);
+        UpdateBookData();
+    }
+
+    public static ArrayList<Book> getPastBooks() {
+        return pastBooks;
+    }
+
     public static void UpdateBookData() {
         //TODO: Send pastBooks ArrayList to DB
         //Call this each time pastBooks ArrayList is updated
