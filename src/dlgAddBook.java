@@ -45,9 +45,8 @@ public class dlgAddBook extends JDialog {
 
     private void onOK() {
         if (isValidInput()) {
-            if (Validator.isPresent(txtISBN, "ISBN", false) &&
-                    ISBN_Validator.ValidateISBN(txtISBN.getText())) {
-                Book.currentBook = new Book(txtISBN.getText());
+            if (Validator.isPresent(txtISBN, "ISBN", false)) {
+                Book.currentBook = new Book(ISBN_Validator.getValidISBN13(txtISBN.getText()));
             } else {
                 Book.currentBook = new Book(txtTitle.getText(), txtAuthor.getText());
             }

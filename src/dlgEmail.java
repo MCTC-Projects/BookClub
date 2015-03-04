@@ -22,6 +22,8 @@ public class dlgEmail extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
+        //recipientList = /*get from*/
+
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
