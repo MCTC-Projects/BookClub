@@ -48,6 +48,27 @@ public class frmLogin {
                 }
             }
         });
+        btnStartNewBookClub.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openStartBookClubDialog();
+            }
+        });
+    }
+
+    private void openStartBookClubDialog() {
+        //Initialize and open review book dialog
+        dlgStartBookClub reviewBookDialog = new dlgStartBookClub();
+        reviewBookDialog.setTitle("Start a new book club");
+
+        //Set dimensions
+        Dimension dimensions = new Dimension(300, 250);
+        reviewBookDialog.setSize(dimensions);
+        reviewBookDialog.setMinimumSize(dimensions);
+
+        frmMain.CenterOnScreen(reviewBookDialog);
+
+        reviewBookDialog.setVisible(true);
     }
 
     private boolean isValidInput() {

@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.event.*;
 
-public class dlgRegister extends JDialog {
+public class dlgStartBookClub extends JDialog {
     private JPanel contentPane;
     private JButton btnStartBookClub;
     private JButton buttonCancel;
@@ -10,7 +10,7 @@ public class dlgRegister extends JDialog {
     private JTextField txtBCN;
     private JLabel lbnName;
 
-    public dlgRegister() {
+    public dlgStartBookClub() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(btnStartBookClub);
@@ -46,8 +46,11 @@ public class dlgRegister extends JDialog {
     private void onOK() {
 // add your code here
 
-        //TODO: Validate text fields:
-        //  -Call Va
+        if (isValidInput()) {
+            //TODO: auto-generate MID?
+            Member newMember = new Member(0, txtName.getText(), txtEmailAddress.getText());
+            Member.AddMember(newMember);
+        }
         dispose();
 
 
@@ -59,7 +62,7 @@ public class dlgRegister extends JDialog {
     }
 
     public static void main(String[] args) {
-        dlgRegister dialog = new dlgRegister();
+        dlgStartBookClub dialog = new dlgStartBookClub();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
@@ -70,7 +73,6 @@ public class dlgRegister extends JDialog {
                 Validator.isPresent(txtEmailAddress, "Email Address", true) &&
                 Validator.isPresent(txtBCN, "Book Club Name", true) &&
                 Validator.isValidGmailAddress(txtEmailAddress, "Email Address", true);
-
 
     }
 }
