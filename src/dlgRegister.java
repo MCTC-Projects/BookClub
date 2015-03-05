@@ -45,7 +45,12 @@ public class dlgRegister extends JDialog {
 
     private void onOK() {
 // add your code here
+
+        //TODO: Validate text fields:
+        //  -Call Va
         dispose();
+
+
     }
 
     private void onCancel() {
@@ -58,5 +63,14 @@ public class dlgRegister extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
+    }
+
+    private boolean isValidInput() {
+        return Validator.isPresent(txtName, "Name", true) &&
+                Validator.isPresent(txtEmailAddress, "Email Address", true) &&
+                Validator.isPresent(txtBCN, "Book Club Name", true) &&
+                Validator.isValidGmailAddress(txtEmailAddress, "Email Address", true);
+
+
     }
 }
