@@ -42,8 +42,9 @@ public class dlgAddMember extends JDialog {
     }
 
     private void onOK() {
-        if ( isValidInput())
+        if ( isValidInput()) {
 
+        }
 
 // add your code here
         dispose();

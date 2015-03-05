@@ -76,6 +76,7 @@ public class frmLogin {
                 Validator.isPresent(txtEmail, "Email", true) &&
                 Validator.isPresent(txtPassword, "Password", true) &&
                 Validator.isValidGmailAddress(txtEmail, "Email", true);
+        //TODO: Validator.isValidMwmberEmail(txtEmail.getText());
     }
 
     public static void main(String[] args) {
