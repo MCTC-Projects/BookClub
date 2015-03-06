@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class dlgEmail extends JDialog {
     private JPanel contentPane;
-    private JButton buttonOK;
+    private JButton BtinSend;
     private JButton buttonCancel;
     private JLabel lblSubject;
     private JLabel lblMessage;
@@ -20,11 +20,11 @@ public class dlgEmail extends JDialog {
     public dlgEmail() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(BtinSend);
 
         //recipientList = /*get from*/
 
-        buttonOK.addActionListener(new ActionListener() {
+        BtinSend.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
