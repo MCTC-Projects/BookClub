@@ -1,5 +1,8 @@
 *.class
 
+# User-specific files
+.idea/workspace.xml
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
