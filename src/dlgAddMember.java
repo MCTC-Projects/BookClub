@@ -3,7 +3,7 @@ import java.awt.event.*;
 
 public class dlgAddMember extends JDialog {
     private JPanel contentPane;
-    private JButton buttonOK;
+    private JButton btnOK;
     private JButton buttonCancel;
     private JTextField txtName;
     private JTextField txtEmailAddress;
@@ -11,9 +11,9 @@ public class dlgAddMember extends JDialog {
     public dlgAddMember() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(btnOK);
 
-        buttonOK.addActionListener(new ActionListener() {
+        btnOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
