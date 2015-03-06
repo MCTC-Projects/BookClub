@@ -116,6 +116,13 @@ public class frmMain {
             }
         });
 
+        btnAddMember.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openAddMemberDialog();
+            }
+        });
+
         /** PAST BOOKS TAB **/
         btnReviewPastBook.addActionListener(new ActionListener() {
             @Override
@@ -281,6 +288,23 @@ public class frmMain {
         getSuggestionsDialog.setVisible(true);
 
         //TODO: call UpdateBookSuggestionsTab() upon closing dialog
+    }
+
+
+
+    private void openAddMemberDialog() {
+        //Initialize and open review book dialog
+        dlgAddMember AddMemberDialog = new dlgAddMember();
+        AddMemberDialog.setTitle("Add Member");
+
+        //Set dimensions
+        Dimension dimensions = new Dimension(315, 200);
+        AddMemberDialog.setSize(dimensions);
+        AddMemberDialog.setMinimumSize(dimensions);
+
+        CenterOnScreen(AddMemberDialog);
+
+        AddMemberDialog.setVisible(true);
     }
 
     private void openShowBooksForm(GoodReadsBook book) {

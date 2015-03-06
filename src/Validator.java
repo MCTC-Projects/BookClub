@@ -12,7 +12,7 @@ public class Validator {
     public static boolean isPresent(JTextField textField, String name, boolean displaysError) {
         if (textField.getText().isEmpty()) {
             if (displaysError) {
-                messageBox(name + " is a required field.", "Input Error");
+                messageBox(name + " is a required field.", "Entry Error");
                 textField.grabFocus();
             }
             return false;
