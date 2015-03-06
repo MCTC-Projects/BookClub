@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.text.DateFormatter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -138,11 +139,26 @@ public class Validator {
         String domainPart = parts[1];
 
         if (!domainPart.equalsIgnoreCase("gmail.com")) {
-            messageBox(error + "\n Please use a Gmail address.", "Invalid Email");
+            messageBox(error + "\n Please enter a valid Gmail address (@gmail.com).", "Invalid Email");
             textField.grabFocus();
             return false;
         }
         return true;
+    }
+
+    public static boolean isValidMemberEmail(String userEmail) {
+        ArrayList<String> memberEmails = new ArrayList<String>();
+
+        for (Member m : Member.getAllMembers()) {
+            memberEmails.add(m.getEmail());
+        }
+
+        if (memberEmails.contains(userEmail)) {
+            return true;
+        } else {
+            messageBox("Email not recognized as valid book club member email.", "Error");
+            return false;
+        }
     }
 
     public static void messageBox(String message, String title)
