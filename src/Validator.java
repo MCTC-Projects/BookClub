@@ -156,7 +156,8 @@ public class Validator {
         if (memberEmails.contains(userEmail)) {
             return true;
         } else {
-            messageBox("Email not recognized as valid book club member email.", "Error");
+            messageBox("\"" + userEmail + "\" not found in member list." +
+                    "\nIf you are not a member you must request to be added to this book club.", "Error");
             return false;
         }
     }
