@@ -53,5 +53,6 @@
         <jarDirectory url="file://$MODULE_DIR$/../javamail-1.4.7" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="javamail-1.4" level="project" />
   </component>
 </module>

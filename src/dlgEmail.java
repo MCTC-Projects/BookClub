@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class dlgEmail extends JDialog {
     private JPanel contentPane;
-    private JButton BtinSend;
+    private JButton BtnSend;
     private JButton buttonCancel;
     private JLabel lblSubject;
     private JLabel lblMessage;
@@ -13,18 +13,16 @@ public class dlgEmail extends JDialog {
     private JTextField txtSubject;
     private JTextArea txtEmailMessage;
 
-    //private String [] recipientList =  { "DrNowzik@gmail.com","RuxinWins@yahoo.com", "darylschmit@yahoo.com"};
-
     public ArrayList<Member> recipientList = new ArrayList<Member>();
 
     public dlgEmail() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(BtinSend);
+        getRootPane().setDefaultButton(BtnSend);
 
         //recipientList = /*get from*/
 
-        BtinSend.addActionListener(new ActionListener() {
+        BtnSend.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
