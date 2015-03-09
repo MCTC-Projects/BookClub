@@ -11,6 +11,7 @@ public class frmLogin {
     private JButton btnLogin;
     private JPanel panel1;
     private JPasswordField txtPassword;
+    private JButton btnStartNewBookClub;
 
     public static String USER_EMAIL;
     public static String USER_PASSWORD;
