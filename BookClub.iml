@@ -19,16 +19,40 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="jaf-1.1" level="project" />
-    <orderEntry type="library" exported="" name="javamail-1.4" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/gson-2.3.1.jar!/" />
+          <root url="file://$MODULE_DIR$/../jaf-1.1.1" />
         </CLASSES>
-        <JAVADOC />
-        <SOURCES />
+        <JAVADOC>
+          <root url="file://$MODULE_DIR$/../jaf-1.1.1/docs/javadocs" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../jaf-1.1.1/demo" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../jaf-1.1.1" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../javamail-1.4.7" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="file://$MODULE_DIR$/../javamail-1.4.7/docs/javadocs" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo" />
+          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo/client" />
+          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo/logging" />
+          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo/outlook" />
+          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo/servlet" />
+          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo/webapp/src/classes" />
+          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo/webapp/src/taglib" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../javamail-1.4.7" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="javamail-1.4" level="project" />
   </component>
 </module>

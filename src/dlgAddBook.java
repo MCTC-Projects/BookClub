@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.event.*;
-import java.text.NumberFormat;
 
 public class dlgAddBook extends JDialog {
     private JPanel contentPane;
@@ -45,9 +44,8 @@ public class dlgAddBook extends JDialog {
 
     private void onOK() {
         if (isValidInput()) {
-            if (Validator.isPresent(txtISBN, "ISBN", false) &&
-                    ISBN_Validator.ValidateISBN(txtISBN.getText())) {
-                Book.currentBook = new Book(txtISBN.getText());
+            if (Validator.isPresent(txtISBN, "ISBN", false)) {
+                Book.currentBook = new Book(ISBN_Validator.getValidISBN13(txtISBN.getText()));
             } else {
                 Book.currentBook = new Book(txtTitle.getText(), txtAuthor.getText());
             }
@@ -57,7 +55,7 @@ public class dlgAddBook extends JDialog {
 
     private boolean isValidInput() {
         if (Validator.isPresent(txtISBN, "ISBN", false)) {
-            if (ISBN_Validator.ValidateISBN(txtISBN.getText())) {
+            if (ISBN_Validator.isValidISBN(txtISBN.getText())) {
                 return true;
             } else {
                 txtISBN.grabFocus();

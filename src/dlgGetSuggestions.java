@@ -51,6 +51,7 @@ public class dlgGetSuggestions extends JDialog {
                 String title = txtTitle.getText();
                 String author = txtAuthor.getText();
                 frmMain.PopulateBookSuggestions(title, author);
+                //TODO: frmMain.UpdateBookSuggestionsTab();
                 dispose();
             } catch (Exception e) {
                 Validator.messageBox(e.toString() + "\n\n" + e.getMessage(), "Error");

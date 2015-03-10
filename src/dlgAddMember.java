@@ -1,28 +1,19 @@
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
-public class dlgEmail extends JDialog {
+public class dlgAddMember extends JDialog {
     private JPanel contentPane;
-    private JButton BtnSend;
+    private JButton btnOK;
     private JButton buttonCancel;
-    private JLabel lblSubject;
-    private JLabel lblMessage;
-    private JTextField txtSenderEmail;
-    private JTextField txtPassword;
-    private JTextField txtSubject;
-    private JTextArea txtEmailMessage;
+    private JTextField txtName;
+    private JTextField txtEmailAddress;
 
-    public ArrayList<Member> recipientList = new ArrayList<Member>();
-
-    public dlgEmail() {
+    public dlgAddMember() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(BtnSend);
+        getRootPane().setDefaultButton(btnOK);
 
-        //recipientList = /*get from*/
-
-        BtnSend.addActionListener(new ActionListener() {
+        btnOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
@@ -51,25 +42,31 @@ public class dlgEmail extends JDialog {
     }
 
     private void onOK() {
-        String sender = frmLogin.USER_EMAIL;
-        String password = frmLogin.USER_PASSWORD;
-        String subject = txtSubject.getText();
-        String message = txtEmailMessage.getText();
-        for (Member r: recipientList){
-            Emailer.sendEmail(sender,password,r.getEmail(),subject,message);
+        if ( isValidInput()) {
+
         }
+
+// add your code here
         dispose();
     }
 
     private void onCancel() {
 // add your code here if necessary
+
         dispose();
     }
 
     public static void main(String[] args) {
-        dlgEmail dialog = new dlgEmail();
+        dlgAddMember dialog = new dlgAddMember();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
+    }
+
+    private boolean isValidInput(){
+        return Validator.isPresent(txtName, "Name", true) &&
+                Validator.isPresent(txtEmailAddress, "Email", true)&&
+                Validator.isValidGmailAddress(txtEmailAddress, "Email", true);
+
     }
 }

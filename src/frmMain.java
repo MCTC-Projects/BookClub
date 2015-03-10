@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * Created by Haru on 2/19/2015.
@@ -13,7 +12,7 @@ public class frmMain {
 
     //Initialize Form Components
     private JTabbedPane tabbedPane1;
-    private JPanel panel1;
+    public JPanel panel1;
     private JPanel tabHome;
     private JPanel tabMembers;
     private JPanel tabPastBooks;
@@ -43,8 +42,6 @@ public class frmMain {
     private JPanel pnlBookInfo;
     private JButton btnGetSuggestions;
 
-    private ArrayList<Book> booksfromdb;
-
     //Create test book object
     //private Book b = new Book("The Hobbit", "Tolkien");
     private Book assignedReading;
@@ -57,15 +54,13 @@ public class frmMain {
     //ArrayList of suggested books
     private static ArrayList bookSuggestions = new ArrayList();
 
-
-
     public frmMain() {
         //Meeting.setAssignedReading(b);
-        //assignedReading = b;
+        Book.GetCurrentBookInfo();
+        assignedReading = Book.getCurrentBook();
         nextMeeting = m;
 //open database connection
         //DB.Connect();
-
 
         if (assignedReading != null) {
             lboBookSuggestions.setEnabled(true);
@@ -87,20 +82,6 @@ public class frmMain {
                 openSetMeetingDialog();
             }
         });
-     //   lboPastBooks = new JList();
-       // DefaultListModel dlm = new DefaultListModel();
-       // booksfromdb = DB.getAllBooks();
-       // int l = booksfromdb.size();
-       // int c = 0;
-       // String[] books = new String[l];
-       // while (c< l){
-         //   Book b = booksfromdb.get(c);
-         //   dlm.addElement(b.getTitle());
-
-       // }
-
-     //   lboPastBooks.setModel(dlm);
-
 
         //Add Book
         btnAddBook.addActionListener(new ActionListener() {
@@ -119,6 +100,28 @@ public class frmMain {
         });
 
         /** MEMBERS TAB **/
+        UpdateMembersTab();
+        btnEmailMembers.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lboMembers.isSelectionEmpty()) {
+                    Validator.messageBox("Please select members to email.", "Select Members");
+                } else {
+                    ArrayList<Member> recipients = new ArrayList<Member>();
+                    for (int index : lboMembers.getSelectedIndices()) {
+                        recipients.add(Member.getAllMembers().get(index));
+                    }
+                    openEmailDialog(recipients);
+                }
+            }
+        });
+
+        btnAddMember.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openAddMemberDialog();
+            }
+        });
 
         /** PAST BOOKS TAB **/
         btnReviewPastBook.addActionListener(new ActionListener() {
@@ -132,7 +135,6 @@ public class frmMain {
             }
         });
 
-
         /** BOOK SUGGESTIONS TAB **/
         UpdateBookSuggestionsTab();
 
@@ -142,6 +144,7 @@ public class frmMain {
                 openGetSuggestionsDialog();
             }
         });
+
         btnViewBook.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -156,22 +159,6 @@ public class frmMain {
                 }
             }
         });
-        btnEmailMembers.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                openEmailDialog();
-            }
-        });
-    }
-
-    private void UpdateBookSuggestionsTab() {
-        DefaultListModel listModel = new DefaultListModel();
-
-        for (Object o : bookSuggestions) {
-            //TODO: get String data from book objects
-            listModel.addElement(o.toString());
-        }
-        lboBookSuggestions.setModel(listModel);
     }
 
     private void UpdateHomeTab() {
@@ -204,6 +191,25 @@ public class frmMain {
         }
     }
 
+    public void UpdateBookSuggestionsTab() {
+        DefaultListModel listModel = new DefaultListModel();
+
+        for (Object o : bookSuggestions) {
+            //TODO: get String data from book objects
+            listModel.addElement(o.toString());
+        }
+        lboBookSuggestions.setModel(listModel);
+    }
+
+    public void UpdateMembersTab() {
+        DefaultListModel listModel = new DefaultListModel();
+
+        for (Member m : Member.getAllMembers()) {
+            listModel.addElement(m.getName() + "; " + m.getEmail());
+        }
+        lboBookSuggestions.setModel(listModel);
+    }
+
     private void openSetMeetingDialog() {
         //Initialize and open set meeting dialog
         dlgSetMeeting setMeetingDialog = new dlgSetMeeting();
@@ -219,20 +225,20 @@ public class frmMain {
         setMeetingDialog.setVisible(true);
     }
 
-    private void openEmailDialog() {
-        //TODO: change addBookDialog and dlgAddBook to emailDialog and dlgEmail
+    private void openEmailDialog(ArrayList<Member> recipients) {
         //Initialize and open add book dialog
-        dlgEmail emaildialog = new dlgEmail();
-        emaildialog.setTitle("Send Email");
+        dlgEmail emailDialog = new dlgEmail();
+        emailDialog.setTitle("Send Email");
+        emailDialog.recipientList = recipients;
 
         //Set dimensions
         Dimension dimensions = new Dimension(400, 400);
-        emaildialog.setSize(dimensions);
-        emaildialog.setResizable(false);
+        emailDialog.setSize(dimensions);
+        emailDialog.setResizable(false);
 
-        CenterOnScreen(emaildialog);
+        CenterOnScreen(emailDialog);
 
-        emaildialog.setVisible(true);
+        emailDialog.setVisible(true);
     }
 
     private void openAddBookDialog() {
@@ -284,35 +290,35 @@ public class frmMain {
         //TODO: call UpdateBookSuggestionsTab() upon closing dialog
     }
 
+
+
+    private void openAddMemberDialog() {
+        //Initialize and open review book dialog
+        dlgAddMember AddMemberDialog = new dlgAddMember();
+        AddMemberDialog.setTitle("Add Member");
+
+        //Set dimensions
+        Dimension dimensions = new Dimension(315, 200);
+        AddMemberDialog.setSize(dimensions);
+        AddMemberDialog.setMinimumSize(dimensions);
+
+        CenterOnScreen(AddMemberDialog);
+
+        AddMemberDialog.setVisible(true);
+    }
+
     private void openShowBooksForm(GoodReadsBook book) {
         //Initialize form
         JFrame frame = new JFrame("frmShowBooks");
-        frmShowBooks showbooksform = new frmShowBooks();
-        frame.setContentPane(showbooksform.getPanel1());
+        frmShowBooks showBooksForm = new frmShowBooks();
+        frame.setContentPane(showBooksForm.getPanel1());
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
+
         frame.setTitle(book.getTitle());    //Form title
-        showbooksform.populateDescription(book);
-        showbooksform.setAuthorTxtField(book.getAuthor());
-        showbooksform.setTitleTxtField(book.getTitle());
-        //Set dimension properties
-        Dimension dimensions = new Dimension(600, 400);
-        frame.setSize(dimensions);
-        frame.setMinimumSize(dimensions);
-
-        CenterOnScreen(frame);
-
-        //Show form
-        frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        //Initialize form
-        JFrame frame = new JFrame("frmMain");
-        frame.setContentPane(new frmMain().panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setTitle("Book Club");    //Form title
+        showBooksForm.populateDescription(book);
+        showBooksForm.setAuthorTxtField(book.getAuthor());
+        showBooksForm.setTitleTxtField(book.getTitle());
 
         //Set dimension properties
         Dimension dimensions = new Dimension(600, 400);
@@ -323,14 +329,6 @@ public class frmMain {
 
         //Show form
         frame.setVisible(true);
-
-//        //Connect to DB
-//        DB db = new DB();
-//
-//        db.Connect();
-//
-//        args= new String[4];
-//        //DataSource.DataSource(args);
     }
 
     public static void CenterOnScreen(Window window) {

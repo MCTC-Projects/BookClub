@@ -1,28 +1,21 @@
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
-public class dlgEmail extends JDialog {
+public class dlgStartBookClub extends JDialog {
     private JPanel contentPane;
-    private JButton BtnSend;
+    private JButton btnStartBookClub;
     private JButton buttonCancel;
-    private JLabel lblSubject;
-    private JLabel lblMessage;
-    private JTextField txtSenderEmail;
-    private JTextField txtPassword;
-    private JTextField txtSubject;
-    private JTextArea txtEmailMessage;
+    private JTextField txtName;
+    private JTextField txtEmailAddress;
+    private JTextField txtBCN;
+    private JLabel lbnName;
 
-    public ArrayList<Member> recipientList = new ArrayList<Member>();
-
-    public dlgEmail() {
+    public dlgStartBookClub() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(BtnSend);
+        getRootPane().setDefaultButton(btnStartBookClub);
 
-        //recipientList = /*get from*/
-
-        BtnSend.addActionListener(new ActionListener() {
+        btnStartBookClub.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
@@ -51,14 +44,16 @@ public class dlgEmail extends JDialog {
     }
 
     private void onOK() {
-        String sender = frmLogin.USER_EMAIL;
-        String password = frmLogin.USER_PASSWORD;
-        String subject = txtSubject.getText();
-        String message = txtEmailMessage.getText();
-        for (Member r: recipientList){
-            Emailer.sendEmail(sender,password,r.getEmail(),subject,message);
+// add your code here
+
+        if (isValidInput()) {
+            //TODO: auto-generate MID?
+            Member newMember = new Member(0, txtName.getText(), txtEmailAddress.getText());
+            Member.AddMember(newMember);
         }
         dispose();
+
+
     }
 
     private void onCancel() {
@@ -67,9 +62,17 @@ public class dlgEmail extends JDialog {
     }
 
     public static void main(String[] args) {
-        dlgEmail dialog = new dlgEmail();
+        dlgStartBookClub dialog = new dlgStartBookClub();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
+    }
+
+    private boolean isValidInput() {
+        return Validator.isPresent(txtName, "Name", true) &&
+                Validator.isPresent(txtEmailAddress, "Email Address", true) &&
+                Validator.isPresent(txtBCN, "Book Club Name", true) &&
+                Validator.isValidGmailAddress(txtEmailAddress, "Email Address", true);
+
     }
 }

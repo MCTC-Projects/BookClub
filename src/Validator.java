@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.text.DateFormatter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ public class Validator {
     public static boolean isPresent(JTextField textField, String name, boolean displaysError) {
         if (textField.getText().isEmpty()) {
             if (displaysError) {
-                messageBox(name + " is a required field.", "Input Error");
+                messageBox(name + " is a required field.", "Entry Error");
                 textField.grabFocus();
             }
             return false;
@@ -118,11 +119,16 @@ public class Validator {
         return parsedDate;
     }
 
+    public static String getDateString(Date date, String dateFormatString) {
+        SimpleDateFormat df  = new SimpleDateFormat(dateFormatString);
+        return df.format(date);
+    }
+
     public static boolean isValidGmailAddress(JTextField textField, String name, boolean displaysError) {
-        String error = "Invalid email address syntax!";
+        String error = "Invalid email address";
 
         String s = textField.getText();
-        String[] parts = s.split("@", 2);
+        String[] parts = s.split("@");
 
         if (parts.length != 2) {
             messageBox(error, "Invalid Email");
@@ -133,11 +139,26 @@ public class Validator {
         String domainPart = parts[1];
 
         if (!domainPart.equalsIgnoreCase("gmail.com")) {
-            messageBox(error + "\n Please use a Gmail address.", "Invalid Email");
+            messageBox(error + "\n Please enter a valid Gmail address (@gmail.com).", "Invalid Email");
             textField.grabFocus();
             return false;
         }
         return true;
+    }
+
+    public static boolean isValidMemberEmail(String userEmail) {
+        ArrayList<String> memberEmails = new ArrayList<String>();
+
+        for (Member m : Member.getAllMembers()) {
+            memberEmails.add(m.getEmail());
+        }
+
+        if (memberEmails.contains(userEmail)) {
+            return true;
+        } else {
+            messageBox("Email not recognized as valid book club member email.", "Error");
+            return false;
+        }
     }
 
     public static void messageBox(String message, String title)

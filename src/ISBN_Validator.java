@@ -1,11 +1,8 @@
-import javax.swing.*;
-import java.text.ParseException;
-
 /**
  * Created by DayDay on 3/1/2015.
  */
 public class ISBN_Validator {
-    public static boolean ValidateISBN (String ISBN) {
+    public static boolean isValidISBN(String ISBN) {
 
         if (ISBN.length() == 10) {
             return ISBN10Validator(ISBN);
@@ -19,15 +16,32 @@ public class ISBN_Validator {
         }
     }
 
-    public static long isbn13ToLong(String isbnString) {
-        long isbnLong = Long.parseLong(isbnString);
-        return isbnLong;
+    public static long getIsbn13Long(String isbn10or13) {
+        //Use any ISBN, validated or not,
+        // get a validated ISBN-13 as a 64-bit integer
+        return Long.parseLong(getValidISBN13(isbn10or13));
+    }
+
+    public static String getValidISBN13(String unvalidatedISBN) {
+        //Takes unvalidated ISBN-10 or -13
+        // validates it through isValidISBN method
+        // if ISBN-10, converts it to ISBN-13
+        // then returns a valid ISBN-13
+
+        if(isValidISBN(unvalidatedISBN)) {
+            if (unvalidatedISBN.length() == 10) {
+                return convertIsbn10to13(unvalidatedISBN);
+            } else {
+                return unvalidatedISBN;
+            }
+        }
+        return null;
     }
 
     private static boolean ISBN10Validator(String ISBN10) {
         char checkChar = ISBN10.charAt(9);    //10th digit is check digit
 
-        String isbnSubstring = ISBN10.substring(0, ISBN10.length() - 1);
+        String isbnSubstring = ISBN10.substring(0, 9);
 
         if (!Validator.isInteger(ISBN10, "ISBN", false)) {
             if (!Validator.isInteger(isbnSubstring, "ISBN", false) ||   //first 9 characters must be numeric
@@ -79,31 +93,50 @@ public class ISBN_Validator {
 
         if (ISBN13.startsWith("978")) {
 
-            int sum = 0;
+            int checksum = CalculateISBN13Checksum(ISBN13.substring(0, 12));
+
             int check = ISBN13.charAt(12)-'0';    //13th digit is check digit
 
-            for (int i = 0; i < 12; i++) {
-                int digit = ISBN13.charAt(i)-'0';
-
-                //sum up digits, multiplying even digits by 3
-                if ((i + 1) % 2 == 1) {
-                    //Odd digits
-                    sum += digit;
-                } else {
-                    //Even digits
-                    sum += (3 * digit);
-                }
-            }
-
-            //equation for calculating check digit
-            sum = (10 - (sum % 10)) % 10;
-
             //check digit must equal calculated checksum
-            if (check == sum) {
+            if (check == checksum) {
                 return true;
             }
         }
         Validator.messageBox("Invalid ISBN", "Invalid");
         return false;
+    }
+
+    private static String convertIsbn10to13(String ISBN10) {
+        String ISBN13Substring;
+        String ISBN10Substring = ISBN10.substring(0, 9);
+
+        ISBN13Substring = "978" + ISBN10;
+
+        //Calculate checksum using ISBN-13 algorithm
+        String check = Integer.toString(CalculateISBN13Checksum(ISBN13Substring));
+
+        return ISBN13Substring + check;
+    }
+
+    private static int CalculateISBN13Checksum(String ISBN13Substring) {
+        //Takes first 12 digits of ISBN-13
+        // or first 9 digits of ISBN-10 with 978
+        // added to the start of the 9-digit string
+        int sum = 0;
+        for (int i = 0; i < 12; i++) {
+            int digit = ISBN13Substring.charAt(i)-'0';
+
+            //sum up digits, multiplying even digits by 3
+            if ((i + 1) % 2 == 1) {
+                //Odd digits
+                sum += digit;
+            } else {
+                //Even digits
+                sum += (3 * digit);
+            }
+        }
+
+        //equation for calculating check digit
+        return  (10 - (sum % 10)) % 10;
     }
 }

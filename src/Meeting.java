@@ -2,6 +2,7 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -63,17 +64,34 @@ public class Meeting {
         nextMeeting = meeting;
         UpdateNextMeetingInfo();
 
-        Emailer emailer = new Emailer();
+        //Emailer emailer = new Emailer();  //unnecessary since sendEmail method is static
 
-        String senderEmail;
-        String senderPassword;
-        String[] recipients;
-        String subject;
-        String message;
+        //Email info
+        String senderEmail = frmLogin.USER_EMAIL;
+        String senderPassword = frmLogin.USER_PASSWORD;
+        ArrayList<Member> recipients = Member.getAllMembers();
+        String subject = "Next Book Club Meeting";
 
-//        for (String r : recipients) {
-//            emailer.sendEmail(senderEmail, senderPassword, r, subject, message);
-//        }
+        //message data
+        String meetingLocation = meeting.getLocation();
+        String meetingDate = Validator.getDateString(meeting.getDateTime(), LONG_FRIENDLY_DATE_FORMAT);
+        String bookInfoString =
+                "\"" + meeting.getAssignedReading().getTitle() +
+                        "\" by " + meeting.getAssignedReading().getAuthor();
+
+        String message =
+                "Dear book club member,\n" +
+                "Our next meeting will be on " + meetingDate +
+                ". We will be meeting at " + meetingLocation +
+                ". Please read " + bookInfoString + " before we meet.";
+
+        if (!recipients.isEmpty()) {
+            for (Member r : recipients) {
+                Emailer.sendEmail(senderEmail, senderPassword, r.getEmail(), subject, message);
+            }
+        } else {
+            Validator.messageBox("No members have been registered.", "Error");
+        }
     }
 
     public static void UpdateNextMeetingInfo() {

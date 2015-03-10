@@ -17,16 +17,22 @@ public class Book {
         isbn = i;
         title = t;
         author = a;
+        //TODO: check that isbn and title+author match up? maybe?? idk.
     }
     public Book( String t, String a)
     {
-
         title = t;
         author = a;
+        //TODO: get isbn by title and author
     }
-    public Book(){};
+    public Book(){}         //This constructor keeps popping up for some reason,
+                            // I think it has something to do with GoodReadsBook
+                            // See: Right-click > Find Usages
+                            // I guess it can stay tho, no harm
+
     public Book(String ISBN) {
         setISBN(ISBN);
+        //TODO: get title and author by ISBN
     }
 
     public String getISBN() {
@@ -57,6 +63,9 @@ public class Book {
     public Rating getRating() { return rating; }
     public void setRating(Rating r) { this.rating = r; }
 
+    public static void setCurrentBook(Book book) { currentBook = book; }
+    public static Book getCurrentBook() { return currentBook; }
+
     public static void UpdateCurrentBookInfo() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("AssignedReadingInfo.txt"));
@@ -83,9 +92,9 @@ public class Book {
         }
     }
 
-    public static Book GetCurrentBookInfo() {
+    public static void GetCurrentBookInfo() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("AssignedReadingInfo.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("CurrentBookInfo.txt"));
 
             String data = reader.readLine();
 
@@ -106,17 +115,41 @@ public class Book {
                 } else {
                     b = new Book(bookData[0],bookData[1], bookData[2]);
                 }
-                return b;
+                currentBook = b;
             }
-            return null;
         } catch (IOException ioe) {
             Validator.messageBox("Problem reading from \"AssignedReadingInfo.txt\"\n" + ioe, "Error");
-            return null;
         }
+    }
+
+    public static void AddBook(Book book) {
+        pastBooks.add(book);
+        UpdateBookData();
+    }
+
+    public static void RemoveBook(Book book) {
+        pastBooks.remove(book);
+        UpdateBookData();
+    }
+
+    public static ArrayList<Book> getPastBooks() {
+        return pastBooks;
+    }
+
+    public static void UpdateBookData() {
+        //TODO: Send pastBooks ArrayList to DB
+        //Call this each time pastBooks ArrayList is updated
+    }
+
+    public static void GetLatestBookData() {
+        //TODO: Populate pastBooks ArrayList from DB
+        //Call this at application start (in frmMain)
     }
 
     @Override
     public String toString() {
         return this.getTitle() + "; " + this.getAuthor();
     }
+
+    //TODO: Add sorting capabilities?
 }
