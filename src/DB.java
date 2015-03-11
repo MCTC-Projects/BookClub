@@ -97,7 +97,7 @@ public class DB {
         return b;
     }
 
-    public ArrayList<Book> getAllBooks() {
+    public static ArrayList<Book> getAllBooks() {
         ArrayList<Book> books = null;
 
         try {
