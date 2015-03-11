@@ -149,15 +149,20 @@ public class Validator {
     public static boolean isValidMemberEmail(String userEmail) {
         ArrayList<String> memberEmails = new ArrayList<String>();
 
-        for (Member m : Member.getAllMembers()) {
-            memberEmails.add(m.getEmail());
-        }
+        if (Member.getAllMembers() != null) {
+            for (Member m : Member.getAllMembers()) {
+                memberEmails.add(m.getEmail());
+            }
 
-        if (memberEmails.contains(userEmail)) {
-            return true;
+            if (memberEmails.contains(userEmail)) {
+                return true;
+            } else {
+                messageBox("\"" + userEmail + "\" not found in member list." +
+                        "\nIf you are not a member you must request to be added to this book club.", "Error");
+                return false;
+            }
         } else {
-            messageBox("\"" + userEmail + "\" not found in member list." +
-                    "\nIf you are not a member you must request to be added to this book club.", "Error");
+            messageBox("A book club has not been started yet.\nPlease click \"Start New Book Club\" to get started", "Book club does not exist");
             return false;
         }
     }

@@ -72,6 +72,7 @@ public class Emailer {
             System.out.println("Sent message successfully....");
 
         } catch (MessagingException e) {
+            Validator.messageBox(e + "\n" + e.getMessage(), "Error");
             throw new RuntimeException(e);
         }
     }

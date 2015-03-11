@@ -42,6 +42,8 @@ public class frmMain {
     private JPanel pnlBookInfo;
     private JButton btnGetSuggestions;
 
+    public static String BookClubName;
+
     //Create test book object
     //private Book b = new Book("The Hobbit", "Tolkien");
     private Book assignedReading;
@@ -104,15 +106,15 @@ public class frmMain {
         btnEmailMembers.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (lboMembers.isSelectionEmpty()) {
-                    Validator.messageBox("Please select members to email.", "Select Members");
-                } else {
+//                if (lboMembers.isSelectionEmpty()) {
+//                    Validator.messageBox("Please select members to email.", "Select Members");
+//                } else {
                     ArrayList<Member> recipients = new ArrayList<Member>();
                     for (int index : lboMembers.getSelectedIndices()) {
                         recipients.add(Member.getAllMembers().get(index));
                     }
                     openEmailDialog(recipients);
-                }
+//                }
             }
         });
 

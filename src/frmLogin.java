@@ -23,7 +23,6 @@ public class frmLogin {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (isValidInput()) {
-                    //TODO: validate email and password
                     USER_EMAIL = txtEmail.getText();
                     USER_PASSWORD = txtPassword.getText();
 
@@ -48,14 +47,36 @@ public class frmLogin {
                 }
             }
         });
+        btnStartNewBookClub.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openStartBookClubDialog();
+            }
+        });
     }
 
     private boolean isValidInput() {
         return
+                //TODO: validate email and password
                 Validator.isPresent(txtEmail, "Email", true) &&
                 Validator.isPresent(txtPassword, "Password", true) &&
-                Validator.isValidGmailAddress(txtEmail, "Email", true) &&
-                Validator.isValidMemberEmail(txtEmail.getText());
+                Validator.isValidGmailAddress(txtEmail, "Email", true);// &&
+                //Validator.isValidMemberEmail(txtEmail.getText());
+    }
+
+    private void openStartBookClubDialog() {
+        //Initialize and open set meeting dialog
+        dlgStartBookClub startBookClubDialog = new dlgStartBookClub();
+        startBookClubDialog.setTitle("Start New Book Club");
+
+        //Set dimensions
+        Dimension dimensions = new Dimension(325, 150);
+        startBookClubDialog.setSize(dimensions);
+        startBookClubDialog.setResizable(false);
+
+        frmMain.CenterOnScreen(startBookClubDialog);
+
+        startBookClubDialog.setVisible(true);
     }
 
     public static void main(String[] args) {
@@ -69,7 +90,7 @@ public class frmLogin {
         frame.setTitle("Login");    //Form title
 
         //Set dimension properties
-        Dimension dimensions = new Dimension(300, 150);
+        Dimension dimensions = new Dimension(375, 165);
         frame.setSize(dimensions);
         frame.setMinimumSize(dimensions);
 

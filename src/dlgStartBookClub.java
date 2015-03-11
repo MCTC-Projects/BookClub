@@ -8,7 +8,6 @@ public class dlgStartBookClub extends JDialog {
     private JTextField txtName;
     private JTextField txtEmailAddress;
     private JTextField txtBCN;
-    private JLabel lbnName;
 
     public dlgStartBookClub() {
         setContentPane(contentPane);
@@ -44,16 +43,15 @@ public class dlgStartBookClub extends JDialog {
     }
 
     private void onOK() {
-// add your code here
-
         if (isValidInput()) {
             //TODO: auto-generate MID?
             Member newMember = new Member(0, txtName.getText(), txtEmailAddress.getText());
             Member.AddMember(newMember);
+
+            frmMain.BookClubName = txtBCN.getText();
+
+            dispose();
         }
-        dispose();
-
-
     }
 
     private void onCancel() {
@@ -69,10 +67,10 @@ public class dlgStartBookClub extends JDialog {
     }
 
     private boolean isValidInput() {
-        return Validator.isPresent(txtName, "Name", true) &&
+        return
+                Validator.isPresent(txtName, "Name", true) &&
                 Validator.isPresent(txtEmailAddress, "Email Address", true) &&
                 Validator.isPresent(txtBCN, "Book Club Name", true) &&
                 Validator.isValidGmailAddress(txtEmailAddress, "Email Address", true);
-
     }
 }

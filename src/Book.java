@@ -68,7 +68,7 @@ public class Book {
 
     public static void UpdateCurrentBookInfo() {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("AssignedReadingInfo.txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("CurrentBookInfo.txt"));
 
             if (currentBook != null) {
                 if (currentBook.getISBN() != null) {
@@ -88,7 +88,7 @@ public class Book {
             }
             writer.close();
         } catch (IOException ioe) {
-            Validator.messageBox("Problem writing to \"AssignedReadingInfo.txt\"\n" + ioe, "Error");
+            Validator.messageBox("Problem writing to \"CurrentBookInfo.txt\"\n" + ioe, "Error");
         }
     }
 
@@ -118,7 +118,7 @@ public class Book {
                 currentBook = b;
             }
         } catch (IOException ioe) {
-            Validator.messageBox("Problem reading from \"AssignedReadingInfo.txt\"\n" + ioe, "Error");
+            Validator.messageBox("Problem reading from \"CurrentBookInfo.txt\"\n" + ioe, "Error");
         }
     }
 

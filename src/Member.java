@@ -17,9 +17,6 @@ public class Member implements Comparable<Member> {
         mid = m;
         name = n;
         email = e;
-
-        //
-        AddMember(this);
     }
 
     public int getMid() {
