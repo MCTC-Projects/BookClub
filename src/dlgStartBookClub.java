@@ -71,6 +71,6 @@ public class dlgStartBookClub extends JDialog {
                 Validator.isPresent(txtName, "Name", true) &&
                 Validator.isPresent(txtEmailAddress, "Email Address", true) &&
                 Validator.isPresent(txtBCN, "Book Club Name", true) &&
-                Validator.isValidGmailAddress(txtEmailAddress, "Email Address", true);
+                Validator.isValidGmailAddress(txtEmailAddress);
     }
 }

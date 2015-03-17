@@ -19,7 +19,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="file://$MODULE_DIR$/../jaf-1.1.1" />
@@ -33,7 +33,7 @@
         <jarDirectory url="file://$MODULE_DIR$/../jaf-1.1.1" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="file://$MODULE_DIR$/../javamail-1.4.7" />
@@ -53,6 +53,15 @@
         <jarDirectory url="file://$MODULE_DIR$/../javamail-1.4.7" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="javamail-1.4" level="project" />
+    <orderEntry type="library" exported="" name="javamail-1.4" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/gson-2.3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

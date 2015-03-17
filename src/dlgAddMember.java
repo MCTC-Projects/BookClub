@@ -66,7 +66,7 @@ public class dlgAddMember extends JDialog {
     private boolean isValidInput(){
         return Validator.isPresent(txtName, "Name", true) &&
                 Validator.isPresent(txtEmailAddress, "Email", true)&&
-                Validator.isValidGmailAddress(txtEmailAddress, "Email", true);
+                Validator.isValidGmailAddress(txtEmailAddress);
 
     }
 }
