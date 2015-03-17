@@ -62,7 +62,23 @@ public class frmMain {
         assignedReading = Book.getCurrentBook();
         nextMeeting = m;
 //open database connection
-        //DB.Connect();
+        DB.Connect();
+
+
+        ArrayList<Book> books = new ArrayList<Book>();
+
+        books = DB.getAllBooks();
+
+            lboPastBooks = new JList();
+            DefaultListModel listbooks= new DefaultListModel();
+
+            for (int i = 0; i < books.size(); i++) {
+                //TODO: get String data from book objects
+
+                listbooks.addElement(books.get(i).getTitle());
+            }
+            lboPastBooks.setModel(listbooks);
+
 
         if (assignedReading != null) {
             lboBookSuggestions.setEnabled(true);
