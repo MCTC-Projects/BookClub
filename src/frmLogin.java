@@ -60,7 +60,8 @@ public class frmLogin {
                 //TODO: validate email and password
                 Validator.isPresent(txtEmail, "Email", true) &&
                 Validator.isPresent(txtPassword, "Password", true) &&
-                Validator.isValidGmailAddress(txtEmail, "Email", true);// &&
+                Validator.isValidGmailAddress(txtEmail) &&
+                Validator.isAuthenticUsernamePassword(txtEmail.getText(), txtPassword.getText()); // &&
                 //Validator.isValidMemberEmail(txtEmail.getText());
     }
 
