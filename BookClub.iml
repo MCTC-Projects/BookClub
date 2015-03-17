@@ -22,37 +22,57 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/../jaf-1.1.1" />
+          <root url="jar://$USER_HOME$/Downloads/gson-2.3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Downloads/javamail-1.4.7" />
         </CLASSES>
         <JAVADOC>
-          <root url="file://$MODULE_DIR$/../jaf-1.1.1/docs/javadocs" />
+          <root url="file://$USER_HOME$/Downloads/javamail-1.4.7/docs/javadocs" />
         </JAVADOC>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/../jaf-1.1.1/demo" />
+          <root url="file://$USER_HOME$/Downloads/javamail-1.4.7/demo" />
+          <root url="file://$USER_HOME$/Downloads/javamail-1.4.7/demo/client" />
+          <root url="file://$USER_HOME$/Downloads/javamail-1.4.7/demo/logging" />
+          <root url="file://$USER_HOME$/Downloads/javamail-1.4.7/demo/outlook" />
+          <root url="file://$USER_HOME$/Downloads/javamail-1.4.7/demo/servlet" />
+          <root url="file://$USER_HOME$/Downloads/javamail-1.4.7/demo/webapp/src/classes" />
+          <root url="file://$USER_HOME$/Downloads/javamail-1.4.7/demo/webapp/src/taglib" />
         </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/../jaf-1.1.1" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/Downloads/javamail-1.4.7" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Downloads/jaf-1.1.1" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="file://$USER_HOME$/Downloads/jaf-1.1.1/docs/javadocs" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="file://$USER_HOME$/Downloads/jaf-1.1.1/demo" />
+        </SOURCES>
+        <jarDirectory url="file://$USER_HOME$/Downloads/jaf-1.1.1" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/../javamail-1.4.7" />
+          <root url="jar://$USER_HOME$/Downloads/sqlite-jdbc-3.8.7.jar!/" />
         </CLASSES>
-        <JAVADOC>
-          <root url="file://$MODULE_DIR$/../javamail-1.4.7/docs/javadocs" />
-        </JAVADOC>
+        <JAVADOC />
         <SOURCES>
-          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo" />
-          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo/client" />
-          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo/logging" />
-          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo/outlook" />
-          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo/servlet" />
-          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo/webapp/src/classes" />
-          <root url="file://$MODULE_DIR$/../javamail-1.4.7/demo/webapp/src/taglib" />
+          <root url="jar://$USER_HOME$/Downloads/sqlite-jdbc-3.8.7.jar!/" />
         </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/../javamail-1.4.7" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="javamail-1.4" level="project" />
+    <orderEntry type="library" exported="" name="sqlite-jdbc-3.8.7" level="project" />
   </component>
 </module>
