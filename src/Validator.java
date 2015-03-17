@@ -202,11 +202,11 @@ public class Validator {
             return true;
         } catch (NoSuchProviderException nsp) {
             System.out.println(nsp.getMessage());
-            messageBox("Ivalid username/password combination.", "Error");
+            messageBox("Ivalid username/password combination." + nsp, "Error");
             return false;
         } catch (MessagingException me) {
             System.out.println(me.getMessage());
-            messageBox("Ivalid username/password combination.", "Error");
+            messageBox("Ivalid username/password combination." + me, "Error");
             return false;
         }
     }
