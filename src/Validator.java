@@ -1,9 +1,10 @@
 import javax.swing.*;
-import javax.swing.text.DateFormatter;
+import javax.mail.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
 
 /**
  * Created by DayDay on 2/27/2015.
@@ -124,7 +125,7 @@ public class Validator {
         return df.format(date);
     }
 
-    public static boolean isValidGmailAddress(JTextField textField, String name, boolean displaysError) {
+    public static boolean isValidGmailAddress(JTextField textField) {
         String error = "Invalid email address";
 
         String s = textField.getText();
@@ -157,12 +158,55 @@ public class Validator {
             if (memberEmails.contains(userEmail)) {
                 return true;
             } else {
-                messageBox("\"" + userEmail + "\" not found in member list." +
-                        "\nIf you are not a member you must request to be added to this book club.", "Error");
+                messageBox(
+                        "\"" + userEmail + "\" not found in member list." +
+                        "\nIf you are not a member you must" +
+                        " request to be added to this book club.",
+                        "Error");
                 return false;
             }
         } else {
-            messageBox("A book club has not been started yet.\nPlease click \"Start New Book Club\" to get started", "Book club does not exist");
+            messageBox(
+                    "A book club has not been started yet." +
+                    "\nPlease click \"Start New Book Club\" to get started",
+                    "Book club does not exist");
+            return false;
+        }
+    }
+
+    public static boolean isAuthenticUsernamePassword(final String username, final String password) {
+        char[] pw = new char[password.length()];
+
+        try {
+            Authenticator auth = new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            };
+
+            String host = "smtp.gmail.com";
+
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", host);
+            props.put("mail.smtp.port", "587");
+
+            // Get the Session object.
+            Session session = Session.getDefaultInstance(props, auth);
+            Transport transport = session.getTransport();
+
+            transport.connect();
+            transport.close();
+            return true;
+        } catch (NoSuchProviderException nsp) {
+            System.out.println(nsp.getMessage());
+            messageBox("Ivalid username/password combination." + nsp, "Error");
+            return false;
+        } catch (MessagingException me) {
+            System.out.println(me.getMessage());
+            messageBox("Ivalid username/password combination." + me, "Error");
             return false;
         }
     }
