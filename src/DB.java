@@ -22,7 +22,7 @@ public class DB {
         try {
             Class.forName("org.sqlite.JDBC");
 
-            c = DriverManager.getConnection("jdbc:sqlite:bookclub.db");
+            c = DriverManager.getConnection("jdbc:sqlite:bookclub");
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
@@ -85,7 +85,7 @@ public class DB {
 
             String i = rs.getString("isbn");
             String t = rs.getString("title");
-            String a = rs.getString("author");
+            String a = rs.getString("auther");
 
             b = new Book(i, t, a);
 
@@ -98,7 +98,7 @@ public class DB {
     }
 
     public static ArrayList<Book> getAllBooks() {
-        ArrayList<Book> books = null;
+        ArrayList<Book> books = new ArrayList<Book>();
 
         try {
             //start statement
@@ -111,7 +111,7 @@ public class DB {
             while (rs.next()) {
                 String i = rs.getString("isbn");
                 String t = rs.getString("title");
-                String a = rs.getString("author");
+                String a = rs.getString("auther");
                 Book b = new Book(i, t, a);
                 books.add(b);
             }
