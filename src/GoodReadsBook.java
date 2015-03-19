@@ -26,6 +26,8 @@ public class GoodReadsBook extends Book{
 
     GoodReadsBook(String t,String a) {this.setTitle(t);this.setAuthor(a);}
 
+    GoodReadsBook(String isbn){this.setISBN(isbn);}
+
     public String getImageUrl() {
         return imageUrl;
     }
