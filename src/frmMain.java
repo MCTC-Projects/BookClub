@@ -214,7 +214,7 @@ public class frmMain {
 
     public void UpdateBookSuggestionsTab() {
         DefaultListModel listModel = new DefaultListModel();
-        this.PopulateBookSuggestions(b.getTitle(),b.getAuthor());
+        //this.PopulateBookSuggestions(b.getTitle(),b.getAuthor());
         for (Object o : bookSuggestions) {
             //TODO: get String data from book objects
             listModel.addElement(o.toString());
