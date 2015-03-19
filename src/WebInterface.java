@@ -1,6 +1,5 @@
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-import jdk.nashorn.internal.parser.JSONParser;
+import com.google.gson.Gson;
+
 
 
 import java.io.IOException;
@@ -90,14 +89,11 @@ public class WebInterface {
             }
             connection.disconnect();
             System.out.println(responseJSON.toString());
-            JsonParser jParser = new JsonParser();
-            JsonArray jArray = new JsonArray();
-            jArray = jParser.parse(responseJSON.toString()).getAsJsonArray();
-            for(JsonElement obj : jArray){
-                Book b = jsonMaker.fromJson(obj,Book.class);
-                list.add(b);
-            }
 
+            Field[] books = jsonMaker.fromJson(responseJSON.toString(),Field[].class);
+            for(Field b : books){
+                list.add(b.fields);
+            }
 
         }catch(MalformedURLException mue){
             System.out.println("That url wasn't right.");
@@ -109,8 +105,15 @@ public class WebInterface {
         return list;
     }
 
-    public boolean postBooks(Book[] listOfBooks,String email, String password){
+    public boolean postBooks(ArrayList<Book> listOfBooks,String email, String password){
         boolean results = false;
+        Book[] books = new Book[listOfBooks.size()];
+        int i = 0;
+        for(Book b:listOfBooks){
+            books[i] = b;
+            i++;
+        }
+
         User user = new User(email,password);
         Base64.Encoder b64encoder = Base64.getUrlEncoder();
         Gson jsonMaker = new Gson();
@@ -125,7 +128,7 @@ public class WebInterface {
             connection.connect();
             OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
 
-            wr.write("books = " +jsonMaker.toJson(listOfBooks));
+            wr.write("books = " +jsonMaker.toJson(books));
             wr.flush();
             Scanner jsonScanner = new Scanner(connection.getInputStream());
             StringBuilder responseJSON = new StringBuilder();
@@ -153,5 +156,7 @@ public class WebInterface {
         }
     }
 
-
+    class Field{
+        private Book fields;
+    }
 }
