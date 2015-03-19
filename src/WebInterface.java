@@ -88,7 +88,6 @@ public class WebInterface {
                 responseJSON.append(line);
             }
             connection.disconnect();
-            System.out.println(responseJSON.toString());
 
             Field[] books = jsonMaker.fromJson(responseJSON.toString(),Field[].class);
             for(Field b : books){
@@ -120,15 +119,15 @@ public class WebInterface {
         String json = jsonMaker.toJson(user);
         String b64json = b64encoder.encodeToString(json.getBytes(Charset.forName("UTF-8")));
         try{
-            URL url = new URL("http://mctc-bookclub.herokuapp.com/books/?data="+b64json);
+            URL url = new URL("http://mctc-bookclub.herokuapp.com/books/");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setConnectTimeout(15 * 1000);
             connection.setDoOutput(true);
             connection.connect();
             OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
-
-            wr.write("books = " +jsonMaker.toJson(books));
+            wr.write("data="+b64json+"&");
+            wr.write("books=" +jsonMaker.toJson(books));
             wr.flush();
             Scanner jsonScanner = new Scanner(connection.getInputStream());
             StringBuilder responseJSON = new StringBuilder();
