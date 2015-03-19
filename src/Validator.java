@@ -94,6 +94,19 @@ public class Validator {
         }
     }
 
+    public static boolean isFutureDate(Date date) {
+        Date currentDateTime = new Date();
+
+        if (date.before(currentDateTime)) {
+            messageBox("Please enter a future date value.\nCurrent date/time: "
+                    + getDateString(currentDateTime, Meeting.DETAILED_DATE_FORMAT)
+                    + "\nYou entered: " + getDateString(date, Meeting.DETAILED_DATE_FORMAT),
+                    "Entry Error");
+            return false;
+        }
+        return true;
+    }
+
     public static boolean dateIsWithinRange(Date date, String name, Date min, Date max) {
         SimpleDateFormat df = new SimpleDateFormat(Meeting.SHORT_DATE_FORMAT);
         if (date.before(min) || date.after(max)) {

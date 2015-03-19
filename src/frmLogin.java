@@ -60,7 +60,7 @@ public class frmLogin {
                 //TODO: validate email and password
                 Validator.isPresent(txtEmail, "Email", true) &&
                 Validator.isPresent(txtPassword, "Password", true) &&
-                Validator.isValidGmailAddress(txtEmail);
+                Validator.isValidGmailAddress(txtEmail);// &&
                 //Validator.isAuthenticUsernamePassword(txtEmail.getText(), txtPassword.getText()); // &&
                 //Validator.isValidMemberEmail(txtEmail.getText());
     }
@@ -99,7 +99,5 @@ public class frmLogin {
         frmMain.CenterOnScreen(frame);
 
         frame.setVisible(true);
-
-        //frame.dispose();
     }
 }

@@ -50,6 +50,7 @@ public class dlgAddBook extends JDialog {
                 Book.currentBook = new Book(txtTitle.getText(), txtAuthor.getText());
             }
             dispose();
+            frmMain.RestartMainForm();
         }
     }
 
