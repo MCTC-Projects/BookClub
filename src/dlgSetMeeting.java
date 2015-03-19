@@ -104,6 +104,7 @@ public class dlgSetMeeting extends JDialog {
         String time = cboTime.getSelectedItem().toString();
         String amPm = cboAmPm.getSelectedItem().toString();
 
+        //DateTime format: MMMM dd, yyyy hh:mm aaa
         String dateTimeString =
                 month + " "
                 + day + ", "
@@ -113,8 +114,12 @@ public class dlgSetMeeting extends JDialog {
 
         if (Validator.isPresent(txtLocation, "Location", true)) {
             Date dateTime = Validator.ParseDate(dateTimeString, Meeting.FRIENDLY_DATE_FORMAT);
-            Meeting.setNextMeeting(new Meeting(dateTime, location));
-            dispose();
+
+            if (Validator.isFutureDate(dateTime)) {
+                Meeting.setNextMeeting(new Meeting(dateTime, location));
+                frmMain.RestartMainForm();
+                dispose();
+            }
         }
     }
 

@@ -1,6 +1,5 @@
 import java.io.*;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,8 +14,8 @@ public class Meeting {
 
     private static Meeting nextMeeting;
 
-    public static final String FRIENDLY_DATE_FORMAT = "MMMM dd, yyyy HH:mm a";
-    public static final String LONG_FRIENDLY_DATE_FORMAT = "EEEE, MMMM dd, yyyy 'at' HH:mm a";
+    public static final String FRIENDLY_DATE_FORMAT = "MMMM dd, yyyy hh:mm aaa";
+    public static final String LONG_FRIENDLY_DATE_FORMAT = "EEEE, MMMM dd, yyyy 'at' hh:mm aaa";
     public static final String DETAILED_DATE_FORMAT = "EEE MMM dd HH:mm:ss zzz yyyy";
     public static final String SHORT_DATE_FORMAT = "MM/dd/yyyy";
 
@@ -56,10 +55,6 @@ public class Meeting {
         UpdateNextMeetingInfo();
     }
 
-    public static Meeting getNextMeeting() {
-        return nextMeeting;
-    }
-
     public static void setNextMeeting(Meeting meeting) {
         nextMeeting = meeting;
         UpdateNextMeetingInfo();
@@ -75,22 +70,26 @@ public class Meeting {
         //message data
         String meetingLocation = meeting.getLocation();
         String meetingDate = Validator.getDateString(meeting.getDateTime(), LONG_FRIENDLY_DATE_FORMAT);
-        String bookInfoString =
-                "\"" + meeting.getAssignedReading().getTitle() +
-                        "\" by " + meeting.getAssignedReading().getAuthor();
-
         String message =
                 "Dear book club member,\n" +
-                "Our next meeting will be on " + meetingDate +
-                ". We will be meeting at " + meetingLocation +
-                ". Please read " + bookInfoString + " before we meet.";
+                        "Our next meeting will be on " + meetingDate +
+                        ". We will be meeting at " + meetingLocation + ".";
+
+        if (meeting.getAssignedReading() != null) {
+            String bookInfoString = "\"" + meeting.getAssignedReading().getTitle() +
+                    "\" by " + meeting.getAssignedReading().getAuthor();
+
+            message += "\nPlease read " + bookInfoString + " before we meet.";
+        } else {
+            message += "\nA book has yet to be assigned for this meeting.";
+        }
 
         if (!recipients.isEmpty()) {
             for (Member r : recipients) {
                 Emailer.sendEmail(senderEmail, senderPassword, r.getEmail(), subject, message);
             }
         } else {
-            Validator.messageBox("No members have been registered.", "Error");
+            Validator.messageBox("No members have been registered.\nEmail not sent", "No recipients");
         }
     }
 

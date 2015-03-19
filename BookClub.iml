@@ -73,5 +73,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="jaf-1.1" level="project" />
+    <orderEntry type="library" name="javamail-1.4" level="project" />
   </component>
 </module>

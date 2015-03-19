@@ -43,14 +43,15 @@ public class frmMain {
     private JButton btnGetSuggestions;
 
     public static String BookClubName;
+    private static JFrame mainFrame = null;
 
     //Create test book object
     //private Book b = new Book("The Hobbit", "Tolkien");
     private Book assignedReading;
 
-    //Create test meeting object
-    private Date meetingDate = new Date();
-    private Meeting m = new Meeting(meetingDate, "MCTC T-Building, Room T-3050");
+//    //Create test meeting object
+//    private Date meetingDate = new Date();
+//    private Meeting m = new Meeting(meetingDate, "MCTC T-Building, Room T-3050");
     private Meeting nextMeeting;
 
     //ArrayList of suggested books
@@ -60,34 +61,25 @@ public class frmMain {
         //Meeting.setAssignedReading(b);
         Book.GetCurrentBookInfo();
         assignedReading = Book.getCurrentBook();
-        nextMeeting = m;
-//open database connection
-        DB.Connect();
+        nextMeeting = Meeting.GetNextMeetingInfo();
 
+        //open database connection
+//        DB.Connect();
+//
+//        ArrayList<Book> books = new ArrayList<Book>();
+//
+//        books = DB.getAllBooks();
+//
+//        //lboPastBooks = new JList();       //lboPastBooks is already instantiated
+//        DefaultListModel listbooks= new DefaultListModel();
+//
+//        for (int i = 0; i < books.size(); i++) {
+//            //TODO: get String data from book objects
+//
+//            listbooks.addElement(books.get(i).getTitle());
+//        }
+//        lboPastBooks.setModel(listbooks);
 
-        ArrayList<Book> books = new ArrayList<Book>();
-
-        books = DB.getAllBooks();
-
-            lboPastBooks = new JList();
-            DefaultListModel listbooks= new DefaultListModel();
-
-            for (int i = 0; i < books.size(); i++) {
-                //TODO: get String data from book objects
-
-                listbooks.addElement(books.get(i).getTitle());
-            }
-            lboPastBooks.setModel(listbooks);
-
-
-        if (assignedReading != null) {
-            lboBookSuggestions.setEnabled(true);
-            PopulateBookSuggestions(assignedReading.getTitle(), assignedReading.getAuthor());
-        } else {
-            lboBookSuggestions.setEnabled(false);
-            bookSuggestions.clear();
-            bookSuggestions.add("No book to base suggestions off of, please click \"Get Suggestions\"");
-        }
 
         /** HOME TAB **/
 
@@ -154,6 +146,15 @@ public class frmMain {
         });
 
         /** BOOK SUGGESTIONS TAB **/
+        if (assignedReading != null) {
+            lboBookSuggestions.setEnabled(true);
+            PopulateBookSuggestions(assignedReading.getTitle(), assignedReading.getAuthor());
+        } else {
+            lboBookSuggestions.setEnabled(false);
+            bookSuggestions.clear();
+            bookSuggestions.add("No book to base suggestions off of, please click \"Get Suggestions\"");
+        }
+
         UpdateBookSuggestionsTab();
 
         btnGetSuggestions.addActionListener(new ActionListener() {
@@ -167,10 +168,12 @@ public class frmMain {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (lboBookSuggestions.isSelectionEmpty()) {
-                    Validator.messageBox("Please select a book.", "Error");
-                } else if (lboBookSuggestions.getSelectedIndices().length > 1) {
-                    Validator.messageBox("Please select one book.", "Error");
-                } else {
+                    Validator.messageBox("Please select a book to view.", "Book not selected");
+                }
+                //lboBookSuggestions selection mode "single selection"
+                //so user can only select one book
+                //no need to check if user selects multiple books
+                else {
                     GoodReadsBook book = (GoodReadsBook)bookSuggestions.get(lboBookSuggestions.getSelectedIndex());
 
                     openShowBooksForm(book);
@@ -375,5 +378,32 @@ public class frmMain {
     public static boolean WindowClosed(Window window) {
         //TODO
         return false;
+    }
+
+    public static void RestartMainForm() {
+        if (mainFrame != null) {
+            //dispose old frame if exists
+            mainFrame.dispose();
+        }
+
+        mainFrame = new JFrame("frmMain");
+        mainFrame.setContentPane(new frmMain().panel1);
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.pack();
+
+        mainFrame.setTitle("Book Club");    //Form title
+
+        //Set dimension properties
+        Dimension dimensions = new Dimension(650, 500);
+        mainFrame.setSize(dimensions);
+        mainFrame.setMinimumSize(dimensions);
+
+        CenterOnScreen(mainFrame);
+
+        mainFrame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        RestartMainForm();
     }
 }
