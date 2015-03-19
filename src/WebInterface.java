@@ -2,8 +2,10 @@ import com.google.gson.Gson;
 
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.*;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Scanner;
 
@@ -32,6 +34,7 @@ public class WebInterface {
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(15 * 1000);
             connection.connect();
+
             Scanner jsonScanner = new Scanner(connection.getInputStream());
             StringBuilder responseJSON = new StringBuilder();
             String line;
@@ -45,7 +48,7 @@ public class WebInterface {
         }catch(MalformedURLException mue){
             System.out.println("That url wasn't right.");
         }catch(IOException ioe){
-            System.out.println("something went wrong");
+            System.out.println(ioe.toString());
         }
         return willLogin;
     }
@@ -59,6 +62,75 @@ public class WebInterface {
             this.password = password;
         }
     }
+
+    public ArrayList<Book> getBooks(String email, String password){
+        ArrayList<Book> list = new ArrayList<Book>();
+        User user = new User(email,password);
+        Base64.Encoder b64encoder = Base64.getUrlEncoder();
+        Gson jsonMaker = new Gson();
+        String json = jsonMaker.toJson(user);
+        String b64json = b64encoder.encodeToString(json.getBytes(Charset.forName("UTF-8")));
+        try{
+
+            URL url = new URL("http://mctc-bookclub.herokuapp.com/books/?data="+b64json);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(15 * 1000);
+            connection.connect();
+            Scanner jsonScanner = new Scanner(connection.getInputStream());
+            StringBuilder responseJSON = new StringBuilder();
+            String line;
+            while(jsonScanner.hasNextLine()){
+                line = jsonScanner.nextLine();
+                responseJSON.append(line);
+            }
+            connection.disconnect();
+            list = jsonMaker.fromJson(responseJSON.toString(),new ArrayList<Book>().getClass());
+
+        }catch(MalformedURLException mue){
+            System.out.println("That url wasn't right.");
+        }catch(IOException ioe){
+            System.out.println(ioe.toString());
+        }
+        return list;
+    }
+
+    public boolean postBooks(ArrayList<Book> listOfBooks,String email, String password){
+        boolean results = false;
+        User user = new User(email,password);
+        Base64.Encoder b64encoder = Base64.getUrlEncoder();
+        Gson jsonMaker = new Gson();
+        String json = jsonMaker.toJson(user);
+        String b64json = b64encoder.encodeToString(json.getBytes(Charset.forName("UTF-8")));
+        try{
+            URL url = new URL("http://mctc-bookclub.herokuapp.com/books/?data="+b64json);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setConnectTimeout(15 * 1000);
+            connection.setDoOutput(true);
+            connection.connect();
+            OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
+
+            wr.write("books = " +jsonMaker.toJson(listOfBooks));
+            wr.flush();
+            Scanner jsonScanner = new Scanner(connection.getInputStream());
+            StringBuilder responseJSON = new StringBuilder();
+            String line;
+            while(jsonScanner.hasNextLine()){
+                line = jsonScanner.nextLine();
+                responseJSON.append(line);
+            }
+            connection.disconnect();
+            results = jsonMaker.fromJson(responseJSON.toString(),Login.class).login;
+
+        }catch(MalformedURLException mue){
+            System.out.println("That url wasn't right.");
+        }catch(IOException ioe){
+            System.out.println(ioe.toString());
+        }
+        return results;
+    }
+
     class Login{
         private boolean login;
 

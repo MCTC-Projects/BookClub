@@ -45,7 +45,7 @@ public class frmMain {
     public static String BookClubName;
 
     //Create test book object
-    //private Book b = new Book("The Hobbit", "Tolkien");
+    private Book b = new Book("The Hobbit", "Tolkien");
     private Book assignedReading;
 
     //Create test meeting object
@@ -67,18 +67,17 @@ public class frmMain {
 
         ArrayList<Book> books = new ArrayList<Book>();
 
-        books = DB.getAllBooks();
+
 
             lboPastBooks = new JList();
             DefaultListModel listbooks= new DefaultListModel();
 
-            for (int i = 0; i < books.size(); i++) {
-                //TODO: get String data from book objects
+            for (Book book : DB.getAllBooks()) {
 
-                listbooks.addElement(books.get(i).getTitle());
+                listbooks.addElement(book.getTitle());
             }
             lboPastBooks.setModel(listbooks);
-
+            lboPastBooks.setEnabled(true);
 
         if (assignedReading != null) {
             lboBookSuggestions.setEnabled(true);
@@ -211,7 +210,7 @@ public class frmMain {
 
     public void UpdateBookSuggestionsTab() {
         DefaultListModel listModel = new DefaultListModel();
-
+        this.PopulateBookSuggestions(b.getTitle(),b.getAuthor());
         for (Object o : bookSuggestions) {
             //TODO: get String data from book objects
             listModel.addElement(o.toString());
