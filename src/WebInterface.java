@@ -1,12 +1,16 @@
-import com.google.gson.Gson;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
+import jdk.nashorn.internal.parser.JSONParser;
 
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.net.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -64,7 +68,7 @@ public class WebInterface {
     }
 
     public ArrayList<Book> getBooks(String email, String password){
-        ArrayList<Book> list = new ArrayList<Book>();
+        ArrayList<Book> list= new ArrayList<Book>();
         User user = new User(email,password);
         Base64.Encoder b64encoder = Base64.getUrlEncoder();
         Gson jsonMaker = new Gson();
@@ -85,17 +89,27 @@ public class WebInterface {
                 responseJSON.append(line);
             }
             connection.disconnect();
-            list = jsonMaker.fromJson(responseJSON.toString(),new ArrayList<Book>().getClass());
+            System.out.println(responseJSON.toString());
+            JsonParser jParser = new JsonParser();
+            JsonArray jArray = new JsonArray();
+            jArray = jParser.parse(responseJSON.toString()).getAsJsonArray();
+            for(JsonElement obj : jArray){
+                Book b = jsonMaker.fromJson(obj,Book.class);
+                list.add(b);
+            }
+
 
         }catch(MalformedURLException mue){
             System.out.println("That url wasn't right.");
         }catch(IOException ioe){
             System.out.println(ioe.toString());
         }
+
+
         return list;
     }
 
-    public boolean postBooks(ArrayList<Book> listOfBooks,String email, String password){
+    public boolean postBooks(Book[] listOfBooks,String email, String password){
         boolean results = false;
         User user = new User(email,password);
         Base64.Encoder b64encoder = Base64.getUrlEncoder();
@@ -138,4 +152,6 @@ public class WebInterface {
             this.login = login;
         }
     }
+
+
 }
