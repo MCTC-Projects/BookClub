@@ -20,7 +20,7 @@ public class dlgEmail extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(BtnSend);
 
-        recipientList.add(new Member(1, "Abdallah Day", "abdallah_day92@hotmail.com"));
+        recipientList.add(new Member(1, "Daryl Schmit", "darylschmit@yahoo.com"));
 
         BtnSend.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

@@ -1,24 +1,14 @@
 <component name="libraryTable">
   <library name="jaf-1.1">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/jaf-1.1.1" />
-      <root url="file://$PROJECT_DIR$/javamail-1.4.7" />
+      <root url="file://$APPLICATION_HOME_DIR$/jaf-1.1.1" />
     </CLASSES>
     <JAVADOC>
-      <root url="file://$PROJECT_DIR$/jaf-1.1.1/docs/javadocs" />
-      <root url="file://$PROJECT_DIR$/javamail-1.4.7/docs/javadocs" />
+      <root url="file://$APPLICATION_HOME_DIR$/jaf-1.1.1/docs/javadocs" />
     </JAVADOC>
     <SOURCES>
-      <root url="file://$PROJECT_DIR$/jaf-1.1.1/demo" />
-      <root url="file://$PROJECT_DIR$/javamail-1.4.7/demo" />
-      <root url="file://$PROJECT_DIR$/javamail-1.4.7/demo/client" />
-      <root url="file://$PROJECT_DIR$/javamail-1.4.7/demo/logging" />
-      <root url="file://$PROJECT_DIR$/javamail-1.4.7/demo/outlook" />
-      <root url="file://$PROJECT_DIR$/javamail-1.4.7/demo/servlet" />
-      <root url="file://$PROJECT_DIR$/javamail-1.4.7/demo/webapp/src/classes" />
-      <root url="file://$PROJECT_DIR$/javamail-1.4.7/demo/webapp/src/taglib" />
+      <root url="file://$APPLICATION_HOME_DIR$/jaf-1.1.1/demo" />
     </SOURCES>
-    <jarDirectory url="file://$PROJECT_DIR$/jaf-1.1.1" recursive="false" />
-    <jarDirectory url="file://$PROJECT_DIR$/javamail-1.4.7" recursive="false" />
+    <jarDirectory url="file://$APPLICATION_HOME_DIR$/jaf-1.1.1" recursive="false" />
   </library>
 </component>

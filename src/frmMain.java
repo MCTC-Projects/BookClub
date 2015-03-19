@@ -58,7 +58,7 @@ public class frmMain {
 
     public frmMain() {
         //Meeting.setAssignedReading(b);
-        Book.GetCurrentBookInfo();
+        /*Book.GetCurrentBookInfo();
         assignedReading = Book.getCurrentBook();
         nextMeeting = m;
 //open database connection
@@ -87,7 +87,7 @@ public class frmMain {
             bookSuggestions.clear();
             bookSuggestions.add("No book to base suggestions off of, please click \"Get Suggestions\"");
         }
-
+        */
         /** HOME TAB **/
 
         UpdateHomeTab();

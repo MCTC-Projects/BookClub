@@ -175,41 +175,49 @@ public class Validator {
     }
 
     public static boolean isAuthenticUsernamePassword(final String username, final String password) {
-        char[] pw = new char[password.length()];
+
 
         try {
-            Authenticator auth = new Authenticator() {
-                @Override
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(username, password);
-                }
-            };
 
-            String host = "smtp.gmail.com";
+            // create properties field
+            Properties properties = new Properties();
 
-            Properties props = new Properties();
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.host", host);
-            props.put("mail.smtp.port", "587");
+            properties.put("mail.pop3s.host", "pop.gmail.com");
+            properties.put("mail.pop3s.port", "995");
+            properties.put("mail.pop3s.starttls.enable", "true");
 
-            // Get the Session object.
-            Session session = Session.getDefaultInstance(props, auth);
-            Transport transport = session.getTransport();
+            // Setup authentication, get session
+            Session emailSession = Session.getInstance(properties,
+                    new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(
+                                    username, password);
+                        }
+                    });
 
-            transport.connect();
-            transport.close();
+            // create the POP3 store object and connect with the pop server
+            Store store = emailSession.getStore("pop3s");
+
+            //Create and close session with store object(email)
+            store.connect();
+            store.close();
+
+            System.out.println("Success?");
             return true;
-        } catch (NoSuchProviderException nsp) {
-            System.out.println(nsp.getMessage());
-            messageBox("Ivalid username/password combination." + nsp, "Error");
+
+        } catch (NoSuchProviderException e) {
+            messageBox("Invalid username/password","Error");
             return false;
-        } catch (MessagingException me) {
-            System.out.println(me.getMessage());
-            messageBox("Ivalid username/password combination." + me, "Error");
+        } catch (MessagingException e) {
+            messageBox("Invalid username/password","Error");
+            return false;
+        } catch (Exception e) {
+            messageBox("Invalid username/password","Error");
             return false;
         }
-    }
+
+        }
+
 
     public static void messageBox(String message, String title)
     {

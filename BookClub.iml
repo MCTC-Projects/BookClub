@@ -28,7 +28,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="file://$USER_HOME$/Downloads/javamail-1.4.7" />
@@ -48,7 +48,7 @@
         <jarDirectory url="file://$USER_HOME$/Downloads/javamail-1.4.7" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="file://$USER_HOME$/Downloads/jaf-1.1.1" />
@@ -62,7 +62,7 @@
         <jarDirectory url="file://$USER_HOME$/Downloads/jaf-1.1.1" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$USER_HOME$/Downloads/sqlite-jdbc-3.7.2.jar!/" />
@@ -73,5 +73,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="jaf-1.1" level="project" />
+    <orderEntry type="library" exported="" name="javamail-1.4" level="project" />
   </component>
 </module>
