@@ -53,14 +53,14 @@ public class DB {
 
 
     //adds a book to the database
-    void addBook(Book b) {
+    public static void addBook(Book b) {
         try {
 
             //start statement
             c.setAutoCommit(false);
             Statement stmt = c.createStatement();
             //sql statement
-            String sql = "INSERT INTO books2 (isbn,title,author) " +
+            String sql = "INSERT INTO books2 (isbn,title,auther) " +
                     "VALUES (" + b.getISBN() + ", " + b.getTitle() + "," + b.getAuthor() + ");";
             stmt.executeUpdate(sql);
 

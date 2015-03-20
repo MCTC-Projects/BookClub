@@ -64,21 +64,21 @@ public class frmMain {
         nextMeeting = Meeting.GetNextMeetingInfo();
 
         //open database connection
-//        DB.Connect();
-//
-//        ArrayList<Book> books = new ArrayList<Book>();
-//
-//        books = DB.getAllBooks();
-//
-//        //lboPastBooks = new JList();       //lboPastBooks is already instantiated
-//        DefaultListModel listbooks= new DefaultListModel();
-//
-//        for (int i = 0; i < books.size(); i++) {
-//            //TODO: get String data from book objects
-//
-//            listbooks.addElement(books.get(i).getTitle());
-//        }
-//        lboPastBooks.setModel(listbooks);
+        DB.Connect();
+
+        ArrayList<Book> books = new ArrayList<Book>();
+
+        books = DB.getAllBooks();
+
+        //lboPastBooks = new JList();       //lboPastBooks is already instantiated
+        DefaultListModel listbooks= new DefaultListModel();
+
+        for (int i = 0; i < books.size(); i++) {
+            //TODO: get String data from book objects
+
+            listbooks.addElement(books.get(i).getTitle());
+        }
+        lboPastBooks.setModel(listbooks);
 
 
         /** HOME TAB **/

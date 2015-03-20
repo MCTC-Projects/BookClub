@@ -63,7 +63,11 @@ public class Book {
     public Rating getRating() { return rating; }
     public void setRating(Rating r) { this.rating = r; }
 
-    public static void setCurrentBook(Book book) { currentBook = book; }
+    public static void setCurrentBook(Book book) {
+        currentBook = book;
+        UpdateCurrentBookInfo();
+        DB.addBook(currentBook);
+    }
     public static Book getCurrentBook() { return currentBook; }
 
     public static void UpdateCurrentBookInfo() {
