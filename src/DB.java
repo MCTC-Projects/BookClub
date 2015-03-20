@@ -62,10 +62,11 @@ public class DB {
             //sql statement
             String sql = "INSERT INTO books2 (isbn,title,auther) " +
                     "VALUES (" + b.getISBN() + ", " + b.getTitle() + "," + b.getAuthor() + ");";
-            stmt.executeUpdate(sql);
+            stmt.executeUpdate(sql);    //throws sqlException: near "Hobbit": syntax error
 
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            Validator.messageBox("Problem updating database.", "Database error");
             System.exit(0);
         }
     }

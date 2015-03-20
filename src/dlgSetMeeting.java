@@ -115,7 +115,7 @@ public class dlgSetMeeting extends JDialog {
         if (Validator.isPresent(txtLocation, "Location", true)) {
             Date dateTime = Validator.ParseDate(dateTimeString, Meeting.FRIENDLY_DATE_FORMAT);
 
-            if (Validator.isFutureDate(dateTime)) {
+            if (Validator.isFutureDate(dateTime, true)) {
                 Meeting.setNextMeeting(new Meeting(dateTime, location));
                 frmMain.RestartMainForm();
                 dispose();

@@ -44,18 +44,72 @@ public class dlgAddBook extends JDialog {
 
     private void onOK() {
         if (isValidInput()) {
+            GoodReadsBook grb;
+
             if (Validator.isPresent(txtISBN, "ISBN", false)) {
-//                GoodReadsBook grb = new GoodReadsBook()
-//                GoodReadsResponse response = new GoodReadsResponse()
-                Book b = new Book(ISBN_Validator.getValidISBN13(txtISBN.getText()));
+                //get book by ISBN
+                String isbn10 = ISBN_Validator.getValidISBN10(txtISBN.getText());
+                String isbn13 = ISBN_Validator.getValidISBN13(txtISBN.getText());
 
+                String isbn = isbn10;
+                while (true) {
+                    grb = new GoodReadsBook(isbn);
 
-                Book.setCurrentBook(b);
+                    GoodReadsResponse response = new GoodReadsResponse(grb);
+
+                    //get remaining book info from API
+                    response.populateFromAPI();
+                    grb = response.getBk();
+
+                    if (grb.getTitle() != null && grb.getAuthor() != null) {
+                        break;
+                    } else {
+                        if (isbn.equals(isbn13)) {
+                            //at this point both isbn-10 and isbn-13 did not return book info
+                            break;
+                        }
+                        isbn = isbn13;
+                    }
+                }
             } else {
-                Book.setCurrentBook(new Book(txtTitle.getText(), txtAuthor.getText()));
+                //get book by title and author
+                grb = new GoodReadsBook(txtTitle.getText(), txtAuthor.getText());
+
+                GoodReadsResponse response = new GoodReadsResponse(grb);
+
+                //get remaining book info from API
+                response.populateFromAPI();
+                grb = response.getBk();
             }
-            dispose();
-            frmMain.RestartMainForm();
+
+            String bookTitle = grb.getTitle();
+            String bookISBN = grb.getISBN();
+
+            String authorString = grb.getAuthor();      //author string format: ######Author Namehttp://...
+                                                        //                        id |author name| url
+
+            if (
+                    bookTitle != null &&
+                    authorString != null &&
+                    bookISBN != null
+                    ) {
+                //parse author name from author data string
+                int urlStartsHere = authorString.indexOf("http:");
+
+
+                String authorName = authorString.substring(6, urlStartsHere);   //Author name starts after 6-digit ID
+                // and ends when the url starts
+
+                Book.setCurrentBook(new Book(bookISBN, bookTitle, authorName));
+
+                dispose();
+                frmMain.RestartMainForm();
+            } else {
+                Validator.messageBox(
+                        "Could not get book information for: " +
+                        ((!txtISBN.getText().isEmpty()) ? txtISBN.getText() : txtTitle.getText() + "; " + txtAuthor.getText()),
+                        "Book not found");
+            }
         }
     }
 

@@ -64,9 +64,11 @@ public class Book {
     public void setRating(Rating r) { this.rating = r; }
 
     public static void setCurrentBook(Book book) {
-        currentBook = book;
-        UpdateCurrentBookInfo();
-        DB.addBook(currentBook);
+        if (currentBook!= book) {
+            currentBook = book;
+            UpdateCurrentBookInfo();
+            DB.addBook(currentBook);
+        }
     }
     public static Book getCurrentBook() { return currentBook; }
 

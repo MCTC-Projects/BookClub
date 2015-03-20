@@ -94,14 +94,16 @@ public class Validator {
         }
     }
 
-    public static boolean isFutureDate(Date date) {
+    public static boolean isFutureDate(Date date, boolean displaysError) {
         Date currentDateTime = new Date();
 
         if (date.before(currentDateTime)) {
-            messageBox("Please enter a future date value.\nCurrent date/time: "
-                    + getDateString(currentDateTime, Meeting.DETAILED_DATE_FORMAT)
-                    + "\nYou entered: " + getDateString(date, Meeting.DETAILED_DATE_FORMAT),
-                    "Entry Error");
+            if (displaysError) {
+                messageBox("Please enter a future date value.\nCurrent date/time: "
+                                + getDateString(currentDateTime, Meeting.DETAILED_DATE_FORMAT)
+                                + "\nYou entered: " + getDateString(date, Meeting.DETAILED_DATE_FORMAT),
+                        "Entry Error");
+            }
             return false;
         }
         return true;

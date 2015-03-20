@@ -307,8 +307,6 @@ public class frmMain {
         CenterOnScreen(getSuggestionsDialog);
 
         getSuggestionsDialog.setVisible(true);
-
-        //TODO: call UpdateBookSuggestionsTab() upon closing dialog
     }
 
 
@@ -381,6 +379,8 @@ public class frmMain {
     }
 
     public static void RestartMainForm() {
+        //Sometimes takes a while to restart, patience is key!
+
         if (mainFrame != null) {
             //dispose old frame if exists
             mainFrame.dispose();
@@ -394,7 +394,7 @@ public class frmMain {
         mainFrame.setTitle("Book Club");    //Form title
 
         //Set dimension properties
-        Dimension dimensions = new Dimension(650, 500);
+        Dimension dimensions = new Dimension(550, 350);
         mainFrame.setSize(dimensions);
         mainFrame.setMinimumSize(dimensions);
 

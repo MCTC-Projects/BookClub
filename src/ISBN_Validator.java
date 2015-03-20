@@ -38,6 +38,22 @@ public class ISBN_Validator {
         return null;
     }
 
+    public static String getValidISBN10(String unvalidatedISBN) {
+        //Takes unvalidated ISBN-10 or -13
+        // validates it through isValidISBN method
+        // if ISBN-13, converts it to ISBN-10
+        // then returns a valid ISBN-10
+
+        if(isValidISBN(unvalidatedISBN)) {
+            if (unvalidatedISBN.length() == 13) {
+                return convertIsbn13to10(unvalidatedISBN);
+            } else {
+                return unvalidatedISBN;
+            }
+        }
+        return null;
+    }
+
     private static boolean ISBN10Validator(String ISBN10) {
         char checkChar = ISBN10.charAt(9);    //10th digit is check digit
 
@@ -107,15 +123,43 @@ public class ISBN_Validator {
     }
 
     private static String convertIsbn10to13(String ISBN10) {
-        String ISBN13Substring;
         String ISBN10Substring = ISBN10.substring(0, 9);
 
-        ISBN13Substring = "978" + ISBN10;
+        String ISBN13Substring = "978" + ISBN10Substring;
 
         //Calculate checksum using ISBN-13 algorithm
         String check = Integer.toString(CalculateISBN13Checksum(ISBN13Substring));
 
         return ISBN13Substring + check;
+    }
+
+    private static String convertIsbn13to10(String ISBN13) {
+        String ISBN10Substring = ISBN13.substring(3,12);
+
+        //Calculate checksum using ISBN-10 algorithm
+        int checkSum = CalculateISBN10Checksum(ISBN10Substring);
+        String check;
+
+        if (checkSum == 10) {
+            check = "X";
+        } else {
+            check = Integer.toString(checkSum);
+        }
+
+        return ISBN10Substring + check;
+    }
+
+    private static int CalculateISBN10Checksum(String ISBN10Substring) {
+        int sum = 0;
+        for (int i = 0; i < 9; i++) {
+            int x = 10 - i;
+
+            int digit = ISBN10Substring.charAt(i)-'0';
+
+            sum += (digit * x);
+        }
+
+        return (11 - (sum % 11)) % 11;
     }
 
     private static int CalculateISBN13Checksum(String ISBN13Substring) {
