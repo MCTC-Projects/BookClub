@@ -41,6 +41,7 @@ public class frmMain {
     private JPanel pnlMeetingInfo;
     private JPanel pnlBookInfo;
     private JButton btnGetSuggestions;
+    private JButton btnGetMemberReviews;
 
     public static String BookClubName;
     private static JFrame mainFrame = null;
@@ -136,6 +137,19 @@ public class frmMain {
 
         /** PAST BOOKS TAB **/
         btnReviewPastBook.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lboPastBooks.isSelectionEmpty()) {
+                    Validator.messageBox("Please select a book to review", "Select Book");
+                } else {
+                    int bookIndex = lboPastBooks.getSelectedIndex();
+                    Book b = pastBooks.get(bookIndex);
+                    openBookReviewDialog(b);
+                }
+            }
+        });
+
+        btnGetMemberReviews.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (lboPastBooks.isSelectionEmpty()) {
@@ -297,6 +311,21 @@ public class frmMain {
         reviewBookDialog.bookToReview = b;
 
         reviewBookDialog.setVisible(true);
+    }
+
+    private void openGetMemberReviewsDialog(Book b) {
+        //Initialize and open getMemberReviews dialog
+        dlgGetMemberReviews getMemberReviewsDialog = new dlgGetMemberReviews(b);
+        getMemberReviewsDialog.setTitle("Member reviews for: " + b.toString());
+
+        //Set dimensions
+        Dimension dimensions = new Dimension(300, 250);
+        getMemberReviewsDialog.setSize(dimensions);
+        getMemberReviewsDialog.setMinimumSize(dimensions);
+
+        CenterOnScreen(getMemberReviewsDialog);
+
+        getMemberReviewsDialog.setVisible(true);
     }
 
     private void openGetSuggestionsDialog() {

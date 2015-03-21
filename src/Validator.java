@@ -1,3 +1,4 @@
+import javax.net.ssl.SSLHandshakeException;
 import javax.swing.*;
 import javax.mail.*;
 import java.text.ParseException;
@@ -224,6 +225,7 @@ public class Validator {
             System.out.println(e);
             return false;
         } catch (MessagingException e) {
+
             //TODO: figure out why this SSLHandshakeException keeps getting thrown here:
             //javax.mail.MessagingException: Connect failed;
             //  nested exception is:
@@ -231,7 +233,9 @@ public class Validator {
             //      PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException:
             //      unable to find valid certification path to requested target
 
-            messageBox("Unable to verify credentials","Error");
+            messageBox("Invalid username/password or unable to verify credentials" +
+                    "\nPlease go to: https://www.google.com/settings/security/lesssecureapps\n" +
+                    "and make sure that access to less secure apps is enabled on your Gmail account.","Error");
             System.out.println(e);
             return false;
         } catch (Exception e) {
