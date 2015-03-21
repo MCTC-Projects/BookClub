@@ -7,7 +7,6 @@ public class dlgStartBookClub extends JDialog {
     private JButton buttonCancel;
     private JTextField txtName;
     private JTextField txtEmailAddress;
-    private JTextField txtBCN;
 
     public dlgStartBookClub() {
         setContentPane(contentPane);
@@ -48,7 +47,7 @@ public class dlgStartBookClub extends JDialog {
             //Display warning
             int dialogResult = JOptionPane.showConfirmDialog(null,
                     "Starting a new book club will erase all previous data\n" +
-                            "and set you as the first member of a new book club.\n" +
+                            "and set you as the first member of a new book club.\n\n" +
                                     "Would you like to start a new book club anyway?", "Warning",
                     JOptionPane.YES_NO_OPTION);
 
@@ -83,7 +82,6 @@ public class dlgStartBookClub extends JDialog {
         return
                 Validator.isPresent(txtName, "Name", true) &&
                 Validator.isPresent(txtEmailAddress, "Email Address", true) &&
-                Validator.isPresent(txtBCN, "Book Club Name", true) &&
                 Validator.isValidGmailAddress(txtEmailAddress);
     }
 }

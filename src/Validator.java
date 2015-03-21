@@ -231,7 +231,7 @@ public class Validator {
             //      PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException:
             //      unable to find valid certification path to requested target
 
-            messageBox("Invalid username/password","Error");
+            messageBox("Unable to verify credentials","Error");
             System.out.println(e);
             return false;
         } catch (Exception e) {
