@@ -152,6 +152,14 @@ public class Book {
         //Call this at application start (in frmMain)
     }
 
+    public static void ClearAllBookData() {
+        currentBook = null;
+        pastBooks.clear();
+
+        UpdateBookData();
+        UpdateCurrentBookInfo();
+    }
+
     @Override
     public String toString() {
         return this.getTitle() + "; " + this.getAuthor();

@@ -13,8 +13,8 @@ public class frmLogin {
     private JPasswordField txtPassword;
     private JButton btnStartNewBookClub;
 
-    public static String USER_EMAIL;
-    public static String USER_PASSWORD;
+    public static String userEmail;
+    public static String userPassword;
 
     private static Window loginWindow;
 
@@ -23,8 +23,10 @@ public class frmLogin {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (isValidInput()) {
-                    USER_EMAIL = txtEmail.getText();
-                    USER_PASSWORD = txtPassword.getText();
+                    userEmail = txtEmail.getText();
+                    userPassword = txtPassword.getText();
+
+                    Member.currentUser = Member.getMember(userEmail);
 
                     //Initialize form
                     JFrame frame = new JFrame("frmMain");
@@ -60,8 +62,8 @@ public class frmLogin {
                 //TODO: validate email and password
                 Validator.isPresent(txtEmail, "Email", true) &&
                 Validator.isPresent(txtPassword, "Password", true) &&
-                Validator.isValidGmailAddress(txtEmail);// &&
-                //Validator.isAuthenticUsernamePassword(txtEmail.getText(), txtPassword.getText()); // &&
+                Validator.isValidGmailAddress(txtEmail) &&
+                Validator.isAuthenticUsernamePassword(txtEmail.getText(), txtPassword.getText()); // &&
                 //Validator.isValidMemberEmail(txtEmail.getText());
     }
 

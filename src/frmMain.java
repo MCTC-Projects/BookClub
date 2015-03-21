@@ -56,6 +56,7 @@ public class frmMain {
 
     //ArrayList of suggested books
     private static ArrayList bookSuggestions = new ArrayList();
+    private static ArrayList<Book> pastBooks;
 
     public frmMain() {
         //Meeting.setAssignedReading(b);
@@ -66,17 +67,17 @@ public class frmMain {
         //open database connection
         DB.Connect();
 
-        ArrayList<Book> books = new ArrayList<Book>();
+        pastBooks = new ArrayList<Book>();
 
-        books = DB.getAllBooks();
+        pastBooks = DB.getAllBooks();
 
         //lboPastBooks = new JList();       //lboPastBooks is already instantiated
         DefaultListModel listbooks= new DefaultListModel();
 
-        for (int i = 0; i < books.size(); i++) {
+        for (int i = 0; i < pastBooks.size(); i++) {
             //TODO: get String data from book objects
 
-            listbooks.addElement(books.get(i).getTitle());
+            listbooks.addElement(pastBooks.get(i).getTitle());
         }
         lboPastBooks.setModel(listbooks);
 
@@ -105,7 +106,7 @@ public class frmMain {
         btnReviewBook.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openBookReviewDialog();
+                openBookReviewDialog(Book.getCurrentBook());
             }
         });
 
@@ -140,7 +141,9 @@ public class frmMain {
                 if (lboPastBooks.isSelectionEmpty()) {
                     Validator.messageBox("Please select a book to review", "Select Book");
                 } else {
-                    openBookReviewDialog();
+                    int bookIndex = lboPastBooks.getSelectedIndex();
+                    Book b = pastBooks.get(bookIndex);
+                    openBookReviewDialog(b);
                 }
             }
         });
@@ -279,10 +282,10 @@ public class frmMain {
 
     }
 
-    private void openBookReviewDialog() {
+    private void openBookReviewDialog(Book b) {
         //Initialize and open review book dialog
         dlgReviewBook reviewBookDialog = new dlgReviewBook();
-        reviewBookDialog.setTitle("Review Book");
+        reviewBookDialog.setTitle("Review: " + b.toString());
 
         //Set dimensions
         Dimension dimensions = new Dimension(300, 250);
@@ -290,6 +293,8 @@ public class frmMain {
         reviewBookDialog.setMinimumSize(dimensions);
 
         CenterOnScreen(reviewBookDialog);
+
+        reviewBookDialog.bookToReview = b;
 
         reviewBookDialog.setVisible(true);
     }

@@ -191,7 +191,6 @@ public class Validator {
 
     public static boolean isAuthenticUsernamePassword(final String username, final String password) {
 
-
         try {
 
             // create properties field
@@ -217,21 +216,30 @@ public class Validator {
             store.connect();
             store.close();
 
-            System.out.println("Success?");
+            System.out.println("Username/password authenticated successfully!");
             return true;
 
         } catch (NoSuchProviderException e) {
             messageBox("Invalid username/password","Error");
+            System.out.println(e);
             return false;
         } catch (MessagingException e) {
+            //TODO: figure out why this SSLHandshakeException keeps getting thrown here:
+            //javax.mail.MessagingException: Connect failed;
+            //  nested exception is:
+            //      javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException:
+            //      PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException:
+            //      unable to find valid certification path to requested target
+
             messageBox("Invalid username/password","Error");
+            System.out.println(e);
             return false;
         } catch (Exception e) {
             messageBox("Invalid username/password","Error");
+            System.out.println(e);
             return false;
         }
-
-        }
+    }
 
 
     public static void messageBox(String message, String title)

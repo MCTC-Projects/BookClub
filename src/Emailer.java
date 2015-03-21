@@ -4,6 +4,7 @@
 //You need to download and add the libraries for javamail API and JavaBeans Activation Framework for this to run
 //javamail API:   http://www.oracle.com/technetwork/java/index-138643.html
 //JAF:            http://www.oracle.com/technetwork/java/jaf11-139815.html
+//Files should already be included in repository (BookClub/jaf-1.1.1, BookClub/javamail-1.4.7)
 
 
 import java.util.Properties;

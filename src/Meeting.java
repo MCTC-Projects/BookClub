@@ -62,8 +62,8 @@ public class Meeting {
         //Emailer emailer = new Emailer();  //unnecessary since sendEmail method is static
 
         //Email info
-        String senderEmail = frmLogin.USER_EMAIL;
-        String senderPassword = frmLogin.USER_PASSWORD;
+        String senderEmail = frmLogin.userEmail;
+        String senderPassword = frmLogin.userPassword;
         ArrayList<Member> recipients = Member.getAllMembers();
         String subject = "Next Book Club Meeting";
 
@@ -133,5 +133,10 @@ public class Meeting {
             Validator.messageBox("Problem reading from \"NextMeetingInfo.txt\"\n" + ioe, "Error");
             return null;
         }
+    }
+
+    public static void ClearAllMeetingData() {
+        nextMeeting = null;
+        UpdateNextMeetingInfo();
     }
 }

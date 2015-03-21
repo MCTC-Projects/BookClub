@@ -9,6 +9,8 @@ public class dlgReviewBook extends JDialog {
     private JSlider sliderRating;
     private JTextArea txtComments;
 
+    public Book bookToReview;
+
     public dlgReviewBook() {
         setContentPane(contentPane);
         setModal(true);
@@ -55,16 +57,7 @@ public class dlgReviewBook extends JDialog {
         int rating = sliderRating.getValue();
         String comments = txtComments.getText();
 
-        Rating r = new Rating(new Book("Blah", "B. Blah"), new Member(1, "Me", "me@google.com"), rating, comments); //TODO: get book and member info
-
-        //Testing
-        Validator.messageBox(
-                "Book Title: " + r.getBook().getTitle() +
-                        "\nAuthor: " + r.getBook().getAuthor() +
-                        "\nReviewer Rating: " + r.getRating() + " / 5" +
-                        "\nReviewer Comments:\n" + r.getComments() +
-                        "\nReviewer Name: " + r.getMember().getName(),
-                "Review");
+        Rating r = new Rating(bookToReview, Member.currentUser, rating, comments);
         dispose();
     }
 

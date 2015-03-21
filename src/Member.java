@@ -11,6 +11,7 @@ public class Member implements Comparable<Member> {
     private int mid;
 
     private static ArrayList<Member> AllMembers = new ArrayList<Member>();
+    public static Member currentUser;
 
     public Member(int m, String n, String e)
     {
@@ -48,9 +49,27 @@ public class Member implements Comparable<Member> {
         UpdateMemberData();
     }
 
+    public static void EditMemberData(int memberIndex, Member newMemberData) {
+        if (memberIndex >= AllMembers.size()) {
+            Validator.messageBox("Member index out of range", "Error");
+        } else {
+            AllMembers.set(memberIndex, newMemberData);
+        }
+    }
+
     public static ArrayList<Member> getAllMembers() {
         Collections.sort(AllMembers);
         return AllMembers;
+    }
+
+    public static Member getMember(String email) {
+        for (Member m : AllMembers) {
+            if (m.getEmail().equals(email)) {
+                return m;
+            }
+        }
+        Validator.messageBox("Member not found", "Error");
+        return null;
     }
 
     public static void UpdateMemberData() {
@@ -64,6 +83,11 @@ public class Member implements Comparable<Member> {
         //TODO: Populate AllMembers ArrayList from DB
         //Call this at application start (in frmMain)
         Collections.sort(AllMembers);
+    }
+
+    public static void ClearAllMemberData() {
+        AllMembers.clear();
+        UpdateMemberData();
     }
 
     public int compareTo(Member otherMember) {

@@ -44,11 +44,24 @@ public class dlgStartBookClub extends JDialog {
 
     private void onOK() {
         if (isValidInput()) {
-            //TODO: auto-generate MID?
-            Member newMember = new Member(0, txtName.getText(), txtEmailAddress.getText());
-            Member.AddMember(newMember);
 
-            frmMain.BookClubName = txtBCN.getText();
+            //Display warning
+            int dialogResult = JOptionPane.showConfirmDialog(null,
+                    "Starting a new book club will erase all previous data\n" +
+                            "and set you as the first member of a new book club.\n" +
+                                    "Would you like to start a new book club anyway?", "Warning",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                //Clear all data
+                Book.ClearAllBookData();
+                Member.ClearAllMemberData();
+                Meeting.ClearAllMeetingData();
+
+                //TODO: auto-generate MID?
+                Member newMember = new Member(0, txtName.getText(), txtEmailAddress.getText());
+                Member.AddMember(newMember);
+            }
 
             dispose();
         }

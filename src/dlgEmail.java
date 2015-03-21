@@ -51,8 +51,8 @@ public class dlgEmail extends JDialog {
     }
 
     private void onOK() {
-        String sender = frmLogin.USER_EMAIL;
-        String password = frmLogin.USER_PASSWORD;
+        String sender = frmLogin.userEmail;
+        String password = frmLogin.userPassword;
         String subject = txtSubject.getText();
         String message = txtEmailMessage.getText();
         for (Member r: recipientList){
